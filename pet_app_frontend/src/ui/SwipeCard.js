@@ -63,7 +63,15 @@ export default function SwipeCard({
         {pet.mood && <>Mood: <b>{pet.mood}</b> &middot; </>}
         <span role="img" aria-label="story">📖</span> <span>{pet.story}</span>
       </div>
-      <div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "12px",
+          marginTop: "12px",
+          userSelect: "none"
+        }}
+      >
         <button
           className="heart-btn"
           title="Favorite"
@@ -72,8 +80,13 @@ export default function SwipeCard({
             background: "linear-gradient(110deg, var(--secondary), var(--accent) 80%)",
             color: "var(--primary)",
             filter: "drop-shadow(0 0 5px var(--primary))",
+            boxShadow: "0 0 0 4.5px var(--mint,rgba(120,255,214,0.23))"
           }}
-        ><span role="img" aria-label="heart">💖</span></button>
+          tabIndex={0}
+          aria-label={`Favorite ${pet.name}`}
+        >
+          <span role="img" aria-label="heart">💖</span>
+        </button>
         <button
           className="hero-btn"
           style={{
@@ -83,8 +96,11 @@ export default function SwipeCard({
             color: "var(--text-bright)",
             fontWeight: 600,
             boxShadow: "0 7px 28px var(--primary), 0 4px 14px var(--accent)",
+            border: "2px solid var(--secondary)"
           }}
           onClick={onAdopt}
+          tabIndex={0}
+          aria-label={`Adopt ${pet.name}`}
         >Adopt</button>
       </div>
     </motion.div>

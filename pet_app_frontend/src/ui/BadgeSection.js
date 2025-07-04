@@ -21,8 +21,28 @@ export default function BadgeSection({ badges = [] }) {
   if (!badges.length) {
     badges = fallback;
   }
+  // All badges unearned?
+  const allLocked = badges && badges.every(b => !b.earned);
+
   return (
     <section className="badge-section" aria-label="Badges Earned">
+      {allLocked && (
+        <div
+          style={{
+            color: "var(--secondary)",
+            textAlign: "center",
+            width: "100%",
+            fontWeight: 700,
+            fontSize: "1em",
+            marginRight: 10,
+            marginLeft: 10,
+            opacity: 0.84,
+            fontFamily: "'Quicksand','Baloo 2', cursive"
+          }}
+        >
+          🎯 Earn badges by favoriting, swiping, adopting, and trying the Virtual Home Trial!
+        </div>
+      )}
       {badges.map((badge, i) =>
         <AnimatePresence key={badge.key || i}>
           {badge.earned ? (

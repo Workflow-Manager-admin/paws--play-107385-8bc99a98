@@ -44,6 +44,9 @@ html, body, #root, .App {
   min-height: 100vh;
   background: var(--app-bg);
   color: var(--text-primary);
+  /* Accessibility: better base font-size */
+  font-size: 112%;
+  line-height: 1.5;
 }
 .App {
   text-align: center;
@@ -53,6 +56,16 @@ html, body, #root, .App {
   transition: background 0.5s, color 0.3s;
   font-family: 'Poppins', 'Lato', Arial, sans-serif;
   outline: none;
+  /* UX: soft fade for page transitions */
+  animation: appFadeIn 1s cubic-bezier(0.15,0.8,0.36,1);
+  /* Prevent accidental overflow on mobile */
+  overflow-x: hidden;
+  position: relative;
+}
+/* Subtle fade-in for overall app on mount */
+@keyframes appFadeIn {
+  from { opacity: 0; transform: translateY(19px);}
+  to { opacity: 1; transform: none;}
 }
 
 /* Links and navigation */

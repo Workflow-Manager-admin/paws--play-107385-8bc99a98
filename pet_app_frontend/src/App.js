@@ -11,6 +11,7 @@ import TipsSection from "./ui/TipsSection";
 import { fetchPetImages } from "./pexelsApi";
 import { AnimatePresence, motion } from "framer-motion";
 import VirtualHomeTrial from "./ui/VirtualHomeTrial";
+import OnboardingOverlay from "./ui/OnboardingOverlay";
 // --- Lively SFX ---
 const SWIPE_RIGHT_SFX = "https://cdn.pixabay.com/audio/2022/03/15/audio_118bfa1d93.mp3";
 const SWIPE_LEFT_SFX = "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4fe0.mp3";
@@ -324,6 +325,9 @@ function App() {
             >
               {theme === "light" ? "🌙 Dark" : "☀️ Light"}
             </motion.button>
+            {/* Onboarding overlay shown one time per user */}
+            <OnboardingOverlay />
+
             <main style={{
               maxWidth: 700,
               margin: "0 auto",
