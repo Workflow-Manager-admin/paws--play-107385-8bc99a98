@@ -11,38 +11,63 @@ import TipsSection from "./ui/TipsSection";
 import { fetchPetImages } from "./pexelsApi";
 import { AnimatePresence, motion } from "framer-motion";
 
+/**
+ * Vibrant, playful, and believable mock pet data
+ * Ensure enough variety for stacking cards, and fields match cheerful playful mood.
+ */
+// Expanded with extra cuteness and international flavor
 const BREEDS = [
-  "Corgi", "Maine Coon", "Shih Tzu", "Ragdoll", "Schnauzer", "Beagle", "Bengal", "French Bulldog", "Siamese", "Cavalier"
+  "Corgi", "Maine Coon", "Shih Tzu", "Ragdoll", "Schnauzer", "Beagle", "Bengal", "French Bulldog", "Siamese", "Cavalier",
+  "Dachshund", "Golden Retriever", "Chihuahua", "Persian", "Husky", "Poodle", "Tabby", "Sphynx", "Samoyed", "Cockapoo"
 ];
 const MOODS = [
-  "sleepy", "zoomies", "playful", "snuggly", "adventurous", "shy", "loving", "grumpy", "gentle", "wily"
+  "zoomies", "snuggly", "majestic", "playful", "adventurous", "shy", "loving", "grumpy", "gentle", "wily",
+  "curious", "bouncy", "cuddly", "mischievous", "clumsy", "wise", "brave"
 ];
-// Sample silly, cheerful stories for pets
+// Extra playful, unique mini-stories
 const STORIES = [
-  "Loves sunbeams & slippers more than anything.",
-  "Dreams of chasing rainbows in the backyard.",
-  "Can balance three treats on nose, still waiting for fourth.",
-  "Makes everyone laugh with silly tail wags.",
-  "Is convinced the vacuum cleaner is a monster.",
-  "Thinks park fountains are portals to magical worlds.",
-  "Snores so cutely, it makes puppies jealous.",
-  "Has a PhD in cuddling and mischief.",
-  "Hunt for squeaky toys is their heroic quest!",
-  "Wakes up humans for breakfast with gentle nose boops.",
+  "Loves sunbeams and slippers, believes squeaky toys are magic.",
+  "Dreams of chasing rainbows in grandma's backyard.",
+  "Can balance three treats on nose—still waiting for a fourth.",
+  "Master of sock heists and stealthy kitchen raids.",
+  "Once barked at a mailman... then invited him for snuggles.",
+  "Is sure the vacuum cleaner is a portal to another dimension.",
+  "Thinks park puddles are secret swimming holes.",
+  "Snores so cutely, it's famous on the block.",
+  "Has a PhD in cuddling and stealing warm laundry.",
+  "Sees every butterfly as a new best friend.",
+  "Collects shiny leaves and barks at clouds.",
+  "Has a heroic quest: find the biggest stick in the park!",
+  "Wakes up humans for breakfast with gentle boops.",
+  "Is determined to catch their own tail (someday!).",
+  "Was voted 'Best Smile' at puppy school graduation.",
+  "Likes to nap in sunbeams and chase dreams at night.",
 ];
 const NAMES = [
-  "Peppy", "Mochi", "Ginger", "Oreo", "Tiger", "Fluffy", "Bella", "Luna", "Rocky", "Milo", "Poppy", "Daisy", "Finn", "Pumpkin", "Socks"
+  "Peppy", "Mochi", "Ginger", "Oreo", "Tiger", "Fluffy", "Bella", "Luna", "Rocky", "Milo",
+  "Poppy", "Daisy", "Finn", "Pumpkin", "Socks", "Mimi", "Biscuit", "Sunny", "Shadow", "Kiki", "Moose", "Hazel", "Ziggy"
 ];
 
-// Generate a random pet profile + story
-function generatePetProfile(img, fallbackName) {
-  // Use image photographer as easter egg name if available
-  let name = NAMES[Math.floor(Math.random()*NAMES.length)];
+/**
+ * Generate a random pet profile for a card. Each card gets a believable/cute set of details.
+ * @param {string} img - Pet image link, ideally from Pexels
+ * @param {string} [fallbackName] - Optionally force a name if one fits the image
+ * @param {Object} [photoObj] - Pass raw Pexels photo object for deeper profile spice (like photographer)
+ * @returns {{name:string, breed:string, mood:string, story:string, img:string, desc:string}}
+ */
+// PUBLIC_INTERFACE
+function generatePetProfile(img, fallbackName, photoObj=null) {
+  // Add playful "Easter eggs" with photographer
+  let name = fallbackName || NAMES[Math.floor(Math.random()*NAMES.length)];
+  if (photoObj && typeof photoObj.photographer === "string" && Math.random() > 0.72) {
+    // Sometimes playful: use photographer as "My nickname is..." or "photographer's pet"
+    name = photoObj.photographer.split(" ")[0] || name;
+  }
   let breed = BREEDS[Math.floor(Math.random()*BREEDS.length)];
   let mood = MOODS[Math.floor(Math.random()*MOODS.length)];
   let story = STORIES[Math.floor(Math.random()*STORIES.length)];
   return {
-    name: fallbackName || name,
+    name,
     breed,
     mood,
     story,
@@ -94,16 +119,22 @@ function App() {
   // Load pets on mount
   useEffect(() => {
     setLoading(true);
-    fetchPetImages("cute puppy OR kitten", 12, 1)
+    fetchPetImages("cute puppy OR kitten", 15, 1)
       .then(({ photos }) => {
-        const newStack = photos.slice(0, 12).map((photo, i) =>
-          generatePetProfile(photo.src.medium, NAMES[i % NAMES.length])
+        // Always map from ALL photo info: spice up profile with details if possible
+        let shuffled = photos.slice(0, 15).sort(() => 0.5 - Math.random());
+        const newStack = shuffled.map((photo, idx) =>
+          generatePetProfile(
+            photo.src.medium || photo.src.portrait || photo.src.landscape || photo.src.original,
+            NAMES[idx % NAMES.length],
+            photo
+          )
         );
         setPetCards(newStack);
         setLoading(false);
       })
       .catch(() => {
-        // fallback demo pets hardcoded
+        // fallback demo pets hardcoded, still using full playful variety
         setPetCards([
           generatePetProfile("https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&w=400"),
           generatePetProfile("https://images.pexels.com/photos/1404727/pexels-photo-1404727.jpeg?auto=compress&w=400"),
