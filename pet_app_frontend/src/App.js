@@ -10,6 +10,7 @@ import CertModal from "./ui/CertModal";
 import TipsSection from "./ui/TipsSection";
 import { fetchPetImages } from "./pexelsApi";
 import { AnimatePresence, motion } from "framer-motion";
+import VirtualHomeTrial from "./ui/VirtualHomeTrial";
 // --- Lively SFX ---
 const SWIPE_RIGHT_SFX = "https://cdn.pixabay.com/audio/2022/03/15/audio_118bfa1d93.mp3";
 const SWIPE_LEFT_SFX = "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4fe0.mp3";
@@ -481,119 +482,13 @@ function App() {
               </section>
 
               {/* Virtual Home Trial Feature */}
-              <AnimatePresence>
-                {showTrial && (
-                  <motion.div
-                    style={{
-                      position: "fixed", zIndex: 1233,
-                      top: 0, left: 0, right: 0, bottom: 0,
-                      background: "rgba(50,33,85,0.17)",
-                      display: "flex", alignItems: "center", justifyContent: "center"
-                    }}
-                    initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                  >
-                    <motion.div
-                      className="cert-modal"
-                      initial={{ scale: 0.93 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0.9 }}
-                      style={{
-                        maxWidth: 380,
-                        border: "3.5px solid var(--lavender)",
-                      }}
-                    >
-                      <div style={{ fontWeight: 700, color: "var(--accent)", marginBottom: 9, fontSize: 23 }}>
-                        🏡 Virtual Home Trial!
-                      </div>
-                      <div style={{ fontSize: 15, color: "var(--text-secondary)" }}>Try your new buddy in your "virtual home" - upload a room pic, place them (and a sticker) in your life!</div>
-                      <label htmlFor="trial-photo" style={{
-                        background: "var(--mint)",
-                        padding: "0.6em 0.9em",
-                        borderRadius: "1em",
-                        cursor: "pointer",
-                        fontWeight: 600, margin: "1em 0 1em 0", display: "inline-block"
-                      }}>
-                        Upload a photo {trialImg ? "✔️" : ""}
-                      </label>
-                      <input
-                        id="trial-photo"
-                        type="file"
-                        accept="image/*"
-                        style={{ display: "none" }}
-                        onChange={e => {
-                          if(e.target.files[0]) {
-                            const url = URL.createObjectURL(e.target.files[0]);
-                            setTrialImg(url);
-                          } else {
-                            setTrialImg(null);
-                          }
-                        }}
-                      />
-                      {trialImg && (
-                        <div style={{ position: "relative", margin: "1em auto", width: "93%", maxWidth: 295, minHeight: 175 }}>
-                          <img
-                            src={trialImg}
-                            alt="Your room"
-                            style={{
-                              width: "100%",
-                              borderRadius: "1em",
-                              boxShadow: "0 2px 12px var(--primary)",
-                              objectFit: "cover",
-                              maxHeight: 190,
-                            }}
-                          />
-                          {adoptedPet && (
-                            <img
-                              src={adoptedPet.img}
-                              alt={adoptedPet.name}
-                              style={{
-                                width: 84,
-                                position: "absolute",
-                                left: "56%",
-                                top: "59%",
-                                borderRadius: "1.1em",
-                                transform: "translate(-50%,-41%) rotate(-7deg)",
-                                boxShadow: "0 6px 13px var(--mint)",
-                                zIndex: 13
-                              }}
-                            />
-                          )}
-                          {trialSticker && (
-                            <span style={{
-                              position: "absolute",
-                              right: 23,
-                              bottom: 18,
-                              fontSize: "2.6em"
-                            }}>{trialSticker}</span>
-                          )}
-                        </div>
-                      )}
-                      <div style={{margin:"1.2em 0 0.2em 0"}}>Pick a sticker:</div>
-                      <div style={{ display: "flex", justifyContent: "center", gap: 8 }}>
-                        {STICKERS.map(s => (
-                          <motion.button
-                            className="heart-btn"
-                            key={s}
-                            onClick={()=>handleTrialSticker(s)}
-                            style={{
-                              background: trialSticker===s ? "var(--accent)" : "var(--secondary)",
-                              border:trialSticker===s?"2px solid var(--mint)":"none",
-                              fontSize:"1.32em"
-                            }}
-                            whileTap={{scale:1.17}}
-                          >{s}</motion.button>
-                        ))}
-                      </div>
-                      <div style={{ marginTop:16 }}>
-                        <button className="hero-btn" style={{
-                          marginRight: 9, background: "var(--primary)"
-                        }} disabled={!trialImg} onClick={handleTrialSubmit}>Try in your home!</button>
-                        <button className="nav-btn" style={{ marginLeft:4, color:"var(--secondary)"}} onClick={()=>setShowTrial(false)}>Close</button>
-                      </div>
-                    </motion.div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <VirtualHomeTrial
+                open={showTrial}
+                onClose={() => setShowTrial(false)}
+                petImg={adoptedPet?.img || petCards[0]?.img || "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&w=400"}
+                mascotName={adoptedPet?.name || petCards[0]?.name}
+                onTrialComplete={handleTrialSubmit}
+              />
 
               <>
                 <motion.button

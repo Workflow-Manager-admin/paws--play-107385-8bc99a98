@@ -11,6 +11,23 @@ This project provides a minimal React template with a clean, modern UI and minim
 
 ## Getting Started
 
+---
+
+## Virtual Home Trial Feature
+
+The Virtual Home Trial enables users to upload a photo of their room and decorate it with a draggable/scalable/rotatable pet image and playful stickers. This feature provides live preview animations and sound feedback for a fun and interactive experience.
+
+### Usage
+
+- Click the **"Virtual Home Trial"** button or badge.
+- Upload a room photo.
+- Drag, scale, and rotate the pet image to position in your room.
+- Decorate with playful stickers (drag icons onto the image).
+- Use the "Live Preview" for animation feedback.
+- When done, submit or close the trial.
+
+Styled in energetic pastel colors, the UI is highly visible and accessible by design.
+
 In the project directory, you can run:
 
 ### `npm start`
