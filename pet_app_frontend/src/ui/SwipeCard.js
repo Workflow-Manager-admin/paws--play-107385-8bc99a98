@@ -3,9 +3,10 @@ import { motion, AnimatePresence } from "framer-motion";
 
 /**
  * SwipeCard - Modern, emotional, accessible pet card for swipe UI.
- * Features: centered, rounded, soft-shadowed, big Pexels image, 
- * bold walnut gray name, muted breed/age, sage tags, warm sand story, emoji,
- * and two playful CTAs with animated heart feedback per UX spec.
+ * Features: centered, rounded, soft-shadowed, big Pexels image,
+ * big walnut gray names, muted breeds/ages, soft sage mood badges,
+ * warm sand backstory block in italic, emoji accents, and playful feedback
+ * animations (heart float, fade/feedback text), all styled per the new palette.
  */
 // PUBLIC_INTERFACE
 export default function SwipeCard({
@@ -20,56 +21,63 @@ export default function SwipeCard({
   onFav = ()=>{},
   onAdopt = ()=>{}
 }) {
-  // Card visual feedback state for heart float
+  // Feedback UI states
   const [showHeart, setShowHeart] = useState(false);
+  const [feedbackText, setFeedbackText] = useState("");
 
-  // Show heart feedback and call parent's onFav
+  // Playful feedback for heart
   function handleFav(e) {
     setShowHeart(true);
-    setTimeout(() => setShowHeart(false), 777);
+    setFeedbackText("Added to Favorites! 💖");
+    setTimeout(() => {
+      setShowHeart(false);
+      setFeedbackText("");
+    }, 900);
+
     if (onFav) onFav(e);
   }
 
-  // Card background: cotton white with soft pastel vignette shadow
+  // Card background & shadow
   const cardBg = "var(--card-bg)";
-  const cardShadow = "0 12px 40px var(--shadow-lg), 0 3px 16px var(--blush-pink)";
-  // Soft pastel vignette overlay
-  const vignette = "radial-gradient(ellipse at 60% 102%, #F9C6C930 66%, transparent 100%), radial-gradient(circle at 13% 4%, #C9E4CA22 36%, transparent 87%)";
+  const cardShadow = "var(--shadow-lg)";
+  // Soft vignette
+  const vignette = "radial-gradient(ellipse at 60% 112%, #F9C6C930 66%, transparent 100%), radial-gradient(circle at 13% 4%, #C9E4CA22 36%, transparent 87%)";
 
-  // Pet tags (mood as sage badge)
+  // Mood tag badge
   function MoodTag({ mood }) {
     return (
       <span
         style={{
-          background: "var(--mint)",
+          background: "var(--soft-sage)",
           color: "var(--walnut-gray)",
-          borderRadius: "1.45em",
-          fontSize: "0.99em",
-          padding: "0.17em 1.18em",
-          fontWeight: 600,
-          margin: "0 0.4em",
+          borderRadius: "1.7em",
+          fontSize: "1.03em",
+          padding: "0.19em 1.2em",
+          fontWeight: 700,
+          margin: "0 0.5em",
           boxShadow: "0 3px 10px var(--mint)",
           display: "inline-block",
-          letterSpacing: "0.04em"
+          letterSpacing: "0.05em",
+          opacity: 0.91
         }}
         aria-label={`Mood: ${mood}`}
       >
-        {mood}
+        {mood} <span aria-label="emoji accent" style={{ fontSize: "1.1em" }}>🌱</span>
       </span>
     );
   }
 
-  // Mini muted text for breed/age
+  // Muted breed text
   function BreedAndAge({ breed }) {
     return (
       <span
         style={{
-          fontWeight: 400,
+          fontWeight: 500,
           color: "var(--text-secondary)",
-          fontSize: "0.94em",
-          marginLeft: 7,
-          opacity: 0.82,
-          verticalAlign: "top"
+          fontSize: "1.01em",
+          marginLeft: 9,
+          opacity: 0.80,
+          verticalAlign: "middle"
         }}
       >
         {breed}
@@ -77,53 +85,92 @@ export default function SwipeCard({
     );
   }
 
-  // Warm sand backstory block
+  // Warm sand backstory
   function Backstory({ story }) {
     return (
       <div
         style={{
-          marginTop: 10,
-          marginBottom: 10,
+          marginTop: 17,
+          marginBottom: 15,
           background: "var(--warm-sand)",
           color: "var(--walnut-gray)",
-          opacity: 0.98,
+          opacity: 0.99,
           fontStyle: "italic",
           fontFamily: "'Poppins','Quicksand',sans-serif",
-          fontSize: "1.09em",
-          borderRadius: "1.15em",
-          padding: "0.7em 1.02em 0.73em 1.02em",
-          boxShadow: "0 1.4px 17px #FFB6B62B",
-          minHeight: 44,
+          fontSize: "1.15em",
+          borderRadius: "1.25em",
+          padding: "0.74em 1.13em 0.73em 1.13em",
+          boxShadow: "0 2.1px 18px #FFB6B62B",
+          minHeight: 47,
           textAlign: "center",
-          lineHeight: 1.37,
+          lineHeight: 1.39,
+          letterSpacing: "0.01em"
         }}
         aria-label="pet backstory"
       >
-        <span style={{ marginRight: 5 }} role="img" aria-label="storybook">📖</span> {story}
+        <span style={{ marginRight: 7 }} role="img" aria-label="storybook">📖</span> {story}
       </div>
     );
   }
 
-  // Heart Floating Feedback Emoji
+  // Heart float & feedback animation
   function HeartFloat({ show }) {
     return (
       <AnimatePresence>
         {show &&
           <motion.div
-            initial={{ scale: 0.15, opacity: 0, y: 40 }}
-            animate={{ scale: [0.7, 1.17, 1], opacity: [0.85, 0.96, 0], y: [-20, -66, -88], rotate: [2, 18, -8, 0] }}
-            exit={{ opacity: 0, scale: 0, y: -120 }}
-            transition={{ duration: 0.88, type: "spring", stiffness: 77 }}
+            initial={{ scale: 0.13, opacity: 0, y: 48 }}
+            animate={{
+              scale: [0.68, 1.15, 1],
+              opacity: [0.92, 0.99, 0.6, 0],
+              y: [-14, -66, -114],
+              rotate: [6, 15, -12, 8, 0]
+            }}
+            exit={{ opacity: 0, scale: 0, y: -125 }}
+            transition={{ duration: 1.1, type: "spring", stiffness: 80 }}
             style={{
               position: "absolute",
               left: "50%", top: 30,
               transform: "translateX(-50%)",
-              zIndex: 29, fontSize: "2.3em",
+              zIndex: 30, fontSize: "2.6em",
               pointerEvents: "none",
-              filter: "drop-shadow(0 0 22px var(--accent))"
+              filter: "drop-shadow(0 0 26px var(--accent))"
             }}
             aria-label="Favorite feedback"
           >💖</motion.div>
+        }
+      </AnimatePresence>
+    );
+  }
+  // Textual feedback for action
+  function FeedbackText({ text }) {
+    return (
+      <AnimatePresence>
+        {text &&
+          <motion.div
+            key="feedback"
+            initial={{ opacity: 0, y: 19 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20, scale: 0.84 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              position: "absolute",
+              left: "52%",
+              top: 64,
+              transform: "translateX(-50%)",
+              fontWeight: 700,
+              fontSize: "1.12em",
+              padding: "0.4em 1.2em",
+              color: "var(--favorite)",
+              background: "var(--mint)",
+              borderRadius: "1.15em",
+              boxShadow: "0 1.2px 14px var(--coral-red)",
+              letterSpacing: "0.02em",
+              zIndex: 31,
+              pointerEvents: "none"
+            }}
+            aria-live="polite"
+          >{text}</motion.div>
         }
       </AnimatePresence>
     );
@@ -136,20 +183,21 @@ export default function SwipeCard({
         background: `${cardBg}, ${vignette}`,
         boxShadow: cardShadow,
         position: "relative",
-        borderRadius: "2.5em",
-        padding: "2.4em 1.35em 2em 1.35em",
-        minHeight: 470,
-        maxWidth: 400,
+        borderRadius: "2.65em",
+        padding: "2.5em 1.35em 2.2em 1.35em",
+        minHeight: 480,
+        maxWidth: 414,
         margin: "0 auto",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        transition: "box-shadow 0.16s, background 0.2s"
       }}
       whileHover={{
-        scale: 1.045,
-        boxShadow: "0 17px 48px var(--primary), 0 3.5px 24px var(--secondary)",
-        filter: "brightness(1.03) saturate(1.13)"
+        scale: 1.055,
+        boxShadow: "0 23px 70px var(--primary), 0 8px 44px var(--secondary)",
+        filter: "brightness(1.04) saturate(1.13)"
       }}
       whileTap={{ scale: 0.98 }}
       tabIndex={0}
@@ -158,6 +206,7 @@ export default function SwipeCard({
     >
       {/* Heart float feedback for "save" */}
       <HeartFloat show={showHeart} />
+      <FeedbackText text={feedbackText} />
 
       <img
         src={pet.img}
@@ -165,51 +214,58 @@ export default function SwipeCard({
         loading="lazy"
         style={{
           border: "5px solid var(--mint)",
-          boxShadow: "0 7px 44px var(--blush-pink)",
+          boxShadow: "0 8px 46px var(--blush-pink), 0 2px 32px var(--sky-blue)",
           transition: "border 0.32s, box-shadow 0.23s",
-          marginBottom: 16,
-          width: "93%",
-          height: 233,
+          marginBottom: 19,
+          width: "95%",
+          height: 240,
+          maxHeight: 320,
           objectFit: "cover",
-          borderRadius: "1.8em",
+          borderRadius: "1.95em",
           outline: "none",
           background: "var(--warm-sand)",
-          filter: "saturate(1.08) brightness(1.03)"
+          filter: "saturate(1.09) brightness(1.04)"
         }}
+        style-compliant // for easier theming/future-test
       />
       <div
         className="pet-name"
         style={{
           color: "var(--walnut-gray)",
-          textShadow: "0 2px 12px var(--soft-sage), 0 0.5px 7px var(--sky-blue)",
-          fontSize: "2em",
+          textShadow: "0 2px 14px var(--soft-sage), 0 1.5px 9px var(--sky-blue)",
+          fontSize: "2.4em",
           fontWeight: 900,
-          letterSpacing: "0.7px",
+          letterSpacing: "0.73px",
           marginBottom: 0,
           fontFamily: "'Baloo 2','Quicksand',cursive",
-          lineHeight: 1.04
+          lineHeight: 1.06,
+          marginTop: "-0.17em"
         }}
       >
-        {pet.name}
-        <BreedAndAge breed={pet.breed} />
+        <span>
+          {pet.name}
+          <BreedAndAge breed={pet.breed} />
+        </span>
       </div>
       <div
         className="pet-desc"
         style={{
           color: "var(--text-secondary)",
-          marginBottom: 6,
+          marginBottom: 5,
           marginTop: 0,
-          fontSize: "1.12em",
+          fontSize: "1.18em",
           fontWeight: 500,
           fontFamily: "'Poppins','Lato',sans-serif",
-          opacity: 0.87
+          opacity: 0.89
         }}
       >
         {pet.desc}
       </div>
       <div
         className="swipecard-tags"
-        style={{ marginBottom: 5 }}
+        style={{
+          marginBottom: 6,
+        }}
       >
         <MoodTag mood={pet.mood} />
       </div>
@@ -220,8 +276,8 @@ export default function SwipeCard({
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          gap: "1.2em",
-          marginTop: 15,
+          gap: "1.45em",
+          marginTop: 16,
           width: "100%"
         }}
       >
@@ -231,35 +287,36 @@ export default function SwipeCard({
           title="Save favorite"
           onClick={handleFav}
           style={{
-            background: "linear-gradient(109deg, var(--accent) 70%, var(--primary));",
+            background: "linear-gradient(114deg, var(--coral-red) 79%, var(--sky-blue) 120%)",
             color: "var(--cotton-white)",
-            filter: "drop-shadow(0 0 17px var(--accent))",
+            filter: "drop-shadow(0 0 18px var(--coral-red))",
             boxShadow: "0 0 0 7px var(--mint)",
-            fontSize: "1.45em",
-            minWidth: 63, minHeight: 63,
+            fontSize: "1.62em",
+            minWidth: 69, minHeight: 69,
             borderRadius: "50%",
             border: "none",
             fontWeight: 900,
             outline: "none",
-            transition: "box-shadow 0.13s, background 0.18s, color .13s"
+            transition: "box-shadow 0.14s, background 0.18s, color .12s"
           }}
           tabIndex={0}
           aria-label={`Save ${pet.name} as favorite`}
         >
-          <span role="img" aria-label="heart" style={{ fontSize: "1.36em" }}>💖</span>
+          <span role="img" aria-label="heart" style={{ fontSize: "1.37em" }}>💖</span>
         </button>
         {/* Adopt */}
         <button
           className="hero-btn"
           style={{
-            fontSize: "1.18em",
-            padding: "0.9em 2.24em",
-            background: "linear-gradient(110deg,var(--blush-pink) 80%,var(--sky-blue) 100%)",
+            fontSize: "1.21em",
+            padding: "1.07em 2.2em",
+            background: "linear-gradient(110deg,var(--blush-pink) 79%,var(--sky-blue) 100%)",
             color: "var(--deep-cocoa)",
             fontWeight: 800,
-            boxShadow: "0 10px 28px var(--primary), 0 2.5px 7px var(--mint)",
-            border: "2.5px solid var(--sky-blue)",
-            borderRadius: "2.6em"
+            boxShadow: "0 8px 31px var(--secondary), 0 2.5px 9px var(--blush-pink)",
+            border: "3.1px solid var(--sky-blue)",
+            borderRadius: "2.7em",
+            letterSpacing: "0.01em"
           }}
           onClick={onAdopt}
           tabIndex={0}
