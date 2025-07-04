@@ -1,26 +1,27 @@
 :root {
-  /* Modern Soft Emotional Palette */
-  --blush-pink: #F9C6C9;    /* buttons/CTAs/highlights */
-  --soft-sage: #C9E4CA;     /* mood tags/backgrounds */
-  --cotton-white: #FFFBF7;  /* app background */
-  --walnut-gray: #4A4A4A;   /* primary text */
-  --warm-sand: #F5E9CF;     /* cards and neutral UI */
-  --sky-blue: #A9D6E5;      /* secondary buttons/actions */
-  --deep-cocoa: #2C2C2C;    /* strong headings */
-  --coral-red: #F67280;     /* favorite/alert/heart actions */
+  /* Modern Soft Emotional Palette + New Dark Palette for dark theme */
+  --deep-navy: #1E1F29;     /* new dark bg */
+  --charcoal-gray: #2C2C2C; /* card bg dark mode */
+  --blush-pink: #F9C6C9;    /* buttons/CTAs/highlights, accent - stays for both */
+  --sky-blue: #A9D6E5;      /* accent color/buttons/CTA */
+  --cotton-white: #FFFBF7;  /* text on dark, app bg on light */
+  --heading-white: #FFFFFF;  /* high contrast headings on dark */
+  --walnut-gray: #4A4A4A;   /* primary text on light */
+  --warm-sand: #F5E9CF;     /* card/neutral light */
+  --coral-red: #F67280;     /* favorite/alert/heart */
+  --favorite: #F67280;
 
-  /* Variable roles mapped for app usage */
+  /* App: mapped variables for global consumption */
   --primary: var(--blush-pink);
   --secondary: var(--sky-blue);
   --accent: var(--coral-red);
 
-  --mint: var(--soft-sage);
+  --mint: #C9E4CA;
   --petal: var(--blush-pink);
-  --favorite: var(--coral-red);
 
   --warmBeigeBg: var(--warm-sand);
   --card-bg: var(--warm-sand);
-  --mood-bg: var(--soft-sage);
+  --mood-bg: var(--mint);
 
   --text-primary: var(--walnut-gray);
   --text-secondary: #5B6466;
@@ -39,43 +40,43 @@
   --focus-ring: 0px 0px 2px 5px #A9D6E570;
 }
 [data-theme="dark"] {
-  /* Dark-mode mappings: preserve emotional tone and contrast */
+  --deep-navy: #1E1F29;
+  --charcoal-gray: #2C2C2C;
   --blush-pink: #F9C6C9;
-  --soft-sage: #43675a;
-  --cotton-white: #22201D;
-  --walnut-gray: #f1e6e5;
-  --warm-sand: #191815;
-  --sky-blue: #8dbdc9;
-  --deep-cocoa: #fffaf6;
+  --sky-blue: #A9D6E5;
+  --heading-white: #FFFFFF;
+  --cotton-white: #FFFBF7;
+  --walnut-gray: #f5f1ee;
+  --warm-sand: #23231c;
   --coral-red: #F67280;
+  --favorite: #F67280;
 
   --primary: var(--sky-blue);
   --secondary: var(--blush-pink);
   --accent: var(--coral-red);
 
-  --mint: var(--soft-sage);
+  --mint: #345249;
   --petal: var(--blush-pink);
-  --favorite: var(--coral-red);
 
-  --warmBeigeBg: var(--warm-sand);
-  --card-bg: #23231c;
-  --mood-bg: #2f4138;
+  --warmBeigeBg: #23231c;
+  --card-bg: var(--charcoal-gray);
+  --mood-bg: #22343e;
 
-  --text-primary: var(--walnut-gray);
-  --text-secondary: #b3babd;
-  --text-bright: var(--deep-cocoa);
+  --text-primary: var(--cotton-white);
+  --text-secondary: #bcd4df;
+  --text-bright: var(--heading-white);
 
-  --heading-text: var(--deep-cocoa);
+  --heading-text: var(--heading-white);
 
   --border-radius-xl: 2.2em;
   --border-radius-2xl: 3.3em;
-  --app-bg: var(--cotton-white);
+  --app-bg: var(--deep-navy);
 
-  --shadow-lg: 0 14px 40px rgba(169,214,229,0.21), 0 8px 30px rgba(249,198,201,0.15), 0 4px 18px rgba(201,228,202,0.13);
-  --shadow-softer: 0 4px 14px rgba(229,198,249,0.09), 0 1.5px 8px rgba(169,214,229,0.13);
-  --shadow-bright: 0 2em 11em #A9D6E533, 0 2px 8px #F9C6C966;
+  /* Adjusted box shadows for darkness and softness */
+  --shadow-lg: 0 10px 40px rgba(169,214,229,0.11), 0 8px 29px rgba(249,198,201,0.09), 0 2px 8px rgba(201,228,202,0.13);
+  --shadow-softer: 0 4px 22px rgba(169,214,229,0.08), 0 1.5px 7px rgba(249,198,201,0.13);
+  --shadow-bright: 0 2em 9em #A9D6E533, 0 2px 7px #F9C6C966;
   --focus-ring: 0px 0px 2px 6px #A9D6E570;
-  --app-bg: #181818;
 }
 
 /* Base layout and font */

@@ -6,39 +6,46 @@ html {
   cursor: url('data:image/svg+xml;utf8,<svg width="32" height="32" viewBox="0 0 32 32" fill="black" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="24" r="8" fill="black"/><circle cx="7" cy="16" r="4" fill="black"/><circle cx="25" cy="16" r="4" fill="black"/><circle cx="12" cy="8" r="3" fill="black"/><circle cx="20" cy="8" r="3" fill="black"/></svg>') 16 16, auto;
 }
 
-/* Body styles: mobile-first, pastel BG */
+/* Body styles: mobile-first, pastel BG, with better transition for dark mode */
 body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Poppins', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  background: var(--cotton-white, #FFFBF7);
+  background: var(--app-bg, #FFFBF7);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--walnut-gray, #4A4A4A);
-  transition: background 0.4s, color 0.3s;
+  color: var(--text-primary, #4A4A4A);
+  transition: background 0.6s cubic-bezier(0.55, 0.17, 0.68, 0.69), color 0.45s cubic-bezier(0.49, 0.13, 0.66, 0.87);
 }
 
-/* Responsive font sizes for playful vibes */
+/* Responsive font sizes and modern contrast for headings */
 h1, .headline {
-  font-family: 'Baloo 2', 'Quicksand', cursive;
+  font-family: 'Baloo 2', 'Fredoka One', 'Quicksand', cursive;
   font-weight: 700;
   font-size: 2.3rem;
   margin: 0.7em 0 0.2em 0;
   letter-spacing: 1px;
+  color: var(--heading-text, #2C2C2C); /* light: deep-cocoa; dark: white */
+  text-shadow: 0 2.5px 10px #f9c6c965, 0 1px 7px #A9D6E599;
+  transition: color 0.38s cubic-bezier(0.49,0.13,0.66,0.87);
 }
 h2, .subtitle {
-  font-family: 'Quicksand', 'Baloo 2', cursive;
+  font-family: 'Quicksand', 'Baloo 2', 'Fredoka One', cursive;
   font-weight: 600;
   font-size: 1.3rem;
   margin: 0.5em 0 0.2em 0;
   letter-spacing: 0.5px;
+  color: var(--heading-text, #2C2C2C);
+  transition: color 0.36s;
 }
 p, .body-text {
-  font-family: 'Poppins', 'Lato', sans-serif;
+  font-family: 'Poppins', 'Lato', Arial, Helvetica, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   margin: 0.1em 0;
+  color: var(--text-primary, #4A4A4A);
+  transition: color 0.38s;
 }
 
 /* Code block font remains */
