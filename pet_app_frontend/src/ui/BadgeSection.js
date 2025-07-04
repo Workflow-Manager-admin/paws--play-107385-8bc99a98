@@ -9,6 +9,9 @@ const ICONS = {
   trial: "🏡",
 };
 
+/**
+ * Badges section: big, round, cozy, bouncy (Lottie placeholder ready), with ample whitespace.
+ */
 // PUBLIC_INTERFACE
 export default function BadgeSection({ badges = [] }) {
   // If missing, fallback to all badge slots unearned
@@ -18,29 +21,38 @@ export default function BadgeSection({ badges = [] }) {
     { key: "adopted", label: "Adopter!", icon: "🏆" },
     { key: "trial", label: "Home Trial", icon: "🏡" },
   ];
-  if (!badges.length) {
-    badges = fallback;
-  }
-  // All badges unearned?
+  badges = badges && badges.length ? badges : fallback;
   const allLocked = badges && badges.every(b => !b.earned);
 
   return (
-    <section className="badge-section" aria-label="Badges Earned">
+    <section className="badge-section" aria-label="Badges Earned" style={{
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      gap: "3em",
+      background: "var(--mint)",
+      borderRadius: "2.1em",
+      minHeight: 80,
+      boxShadow: "var(--shadow-softer)",
+      width: "97%",
+      margin: "2.2em auto 1.1em auto",
+      padding: "1.21em 1em"
+    }}>
       {allLocked && (
         <div
           style={{
-            color: "var(--secondary)",
+            color: "var(--accent)",
             textAlign: "center",
             width: "100%",
-            fontWeight: 700,
-            fontSize: "1em",
-            marginRight: 10,
-            marginLeft: 10,
-            opacity: 0.84,
-            fontFamily: "'Quicksand','Baloo 2', cursive"
+            fontWeight: 900,
+            fontSize: "1.19em",
+            margin: "0 13px",
+            opacity: 0.94,
+            fontFamily: "'Quicksand','Baloo 2', cursive",
+            letterSpacing: "0.1em"
           }}
         >
-          🎯 Earn badges by favoriting, swiping, adopting, and trying the Virtual Home Trial!
+          🎯 Earn badges by favoriting, swiping, adopting, and trying the <b>Virtual Home Trial</b>!
         </div>
       )}
       {badges.map((badge, i) =>
@@ -48,26 +60,27 @@ export default function BadgeSection({ badges = [] }) {
           {badge.earned ? (
             <motion.span
               className="badge-earned"
-              initial={{ scale: 0.4, opacity: 0, rotate: -30 }}
-              animate={{ scale: 1.07, opacity: 1, rotate: 0 }}
-              transition={{ type: "spring", stiffness: 350, damping: 12 }}
+              // LOTTIE placeholder: Add bounce-on-unlock here
+              initial={{ scale: 0.32, opacity: 0, rotate: -45 }}
+              animate={{ scale: 1.13, opacity: 1, rotate: 0 }}
+              exit={{ scale: 0.32, opacity: 0, rotate: -10 }}
+              transition={{ type: "spring", stiffness: 320, damping: 11 }}
               style={{
-                width: 44,
-                height: 44,
-                borderRadius: "50%",
+                width: 62,
+                height: 62,
+                borderRadius: "30em",
                 background: "var(--accent)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                fontSize: "1.9em",
-                boxShadow: "0 2px 14px var(--primary), 0 0.5px 3px var(--secondary)",
-                color: "var(--pop-sky)",
+                fontSize: "2.18em",
+                boxShadow: "0 2px 17px var(--primary), 0 1.5px 6px var(--secondary)",
+                color: "var(--favorite)",
                 position: "relative",
-                marginRight: 6,
-                marginLeft: 6,
-                outline: "3px solid var(--mint)",
-                outlineOffset: "-2px",
-                filter: "drop-shadow(0 0 10px var(--lavender))"
+                margin: "0 10px",
+                outline: "3.2px solid var(--mint)",
+                outlineOffset: "0px",
+                filter: "drop-shadow(0 0 17px var(--lavender))"
               }}
               title={badge.label}
             >
@@ -77,7 +90,17 @@ export default function BadgeSection({ badges = [] }) {
             <span
               className="badge-placeholder"
               style={{
-                filter: "blur(0.2px) grayscale(97%) opacity(0.38)"
+                width: 58,
+                height: 58,
+                background: "var(--secondary)",
+                opacity: 0.21,
+                borderRadius: "29px",
+                color: "var(--primary)",
+                fontSize: "2em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "0 10px"
               }}
               title={`Locked: ${badge.label}`}
             >

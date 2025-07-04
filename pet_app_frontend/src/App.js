@@ -319,8 +319,17 @@ function App() {
               transition={{ duration: 0.5, delay: 0.23 }}
               style={{
                 position: "fixed",
-                top: 20, right: 20,
-                zIndex: 200,
+                top: 21, right: 22,
+                zIndex: 300,
+                background: "var(--card-bg)",
+                boxShadow: "0 2.5px 9px var(--mint)",
+                borderRadius: "1.9em",
+                border: "2.5px solid var(--accent)",
+                fontSize: "1.08em",
+                fontWeight: 600,
+                color: "var(--primary)",
+                outline: "none",
+                padding: ".32em 1.28em"
               }}
             >
               {theme === "light" ? "🌙 Dark" : "☀️ Light"}

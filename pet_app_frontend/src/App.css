@@ -1,42 +1,44 @@
 :root {
-  --primary: #FF8AC2;           /* bright orchid pink pastel */
-  --secondary: #71D9F7;         /* vivid pastel cyan */
-  --accent: #FFD36E;            /* glowing light pastel yellow */
-  --mint: #78FFD6;              /* luminous mint */
-  --lavender: #CAB8FF;          /* extra accent pastel */
-  --pop-sky: #85A8FF;           /* energetic blue */
-  --petal: #FFA8BF;             /* lively pink */
-  --warmBeigeBg: #FFF9F0;       /* lightest soft background */
-  --text-primary: #21203a;      /* deeper navy for better contrast */
-  --text-secondary: #8c84b3;    /* easy to read on card backgrounds */
+  --primary: #FFB6B3;           /* Primary Accent (blush pastel pink) */
+  --secondary: #C5EBAA;         /* Secondary Accent (minty calm pastel green) */
+  --accent: #AEE1F9;            /* Contrast Button (soft blue) */
+  --mint: #C5EBAA;              /* Same as secondary for simplicity */
+  --lavender: #CAB8FF;          /* Supporting pastel purple */
+  --pop-sky: #AEE1F9;           /* Re-using contrast blue for pop/sky */
+  --petal: #FFB6B3;             /* Re-using as petal pink for highlight */
+  --favorite: #F87171;          /* Favorite Heart */
+  --warmBeigeBg: #FFF7EC;       /* Updated Cozy Background */
+  --text-primary: #4A4A4A;      /* Primary readable text */
+  --text-secondary: #757575;    /* Secondary text for subtler use */
   --text-bright: #FFFFFF;
-  --card-bg: #FFF7FD;
-  --shadow-lg: 0 8px 28px 0 rgba(255, 138, 194, 0.19), 0 5px 32px 0 rgba(136, 211, 247, 0.13), 0 2.5px 8px 0 rgba(200, 184, 255, 0.18);
-  --shadow-softer: 0 4px 18px rgba(255, 211, 110, 0.15), 0 1.5px 8px rgba(113, 217, 247, 0.09);
-  --shadow-bright: 0 3em 14em #FFD36E33, 0 3px 10px #FF8AC24D;
-  --border-radius-xl: 1.6em;
-  --border-radius-2xl: 2.6em;
+  --card-bg: #F9EEDB;           /* Cozy card base */
+  --shadow-lg: 0 8px 32px 0 rgba(255, 182, 179, 0.15), 0 5px 36px 0 rgba(174, 225, 249, 0.08), 0 2.5px 8px 0 rgba(197, 235, 170, 0.15);
+  --shadow-softer: 0 4px 24px rgba(174,225,249,0.14), 0 2px 10px rgba(197,235,170,0.09);
+  --shadow-bright: 0 3em 14em #FFD9B633, 0 3px 10px #AEE1F94D;
+  --border-radius-xl: 2.2em;     /* Increased for soft pill look */
+  --border-radius-2xl: 3.3em;
   --app-bg: var(--warmBeigeBg);
-  --focus-ring: 0px 0px 2px 5px #8adbff88;
+  --focus-ring: 0px 0px 2px 5px #AEE1F933;
 }
 [data-theme="dark"] {
-  --primary: #4ED5FF;
-  --secondary: #FF8AC2;
-  --accent: #FFE18A;
-  --mint: #00FFC6;
-  --lavender: #9B80FF;
-  --pop-sky: #2A56FF;
-  --petal: #FF70B5;
-  --warmBeigeBg: #191B2A;
-  --card-bg: #21223A;
-  --text-primary: #F7EFFD;
-  --text-secondary: #8890AD;
-  --text-bright: #FFFDEB;
-  --shadow-lg: 0 8px 32px rgba(87, 203, 252, 0.22), 0 4px 24px rgba(255, 138, 194, 0.18), 0 1.5px 6px rgba(91, 86, 166, 0.14);
-  --shadow-softer: 0 4px 18px rgba(0, 255, 198, 0.17), 0 1.5px 8px rgba(255, 112, 181, 0.13);
+  --primary: #AEE1F9;
+  --secondary: #FFB6B3;
+  --accent: #F87171;
+  --mint: #C5EBAA;
+  --lavender: #CAB8FF;
+  --pop-sky: #AEE1F9;
+  --petal: #FFB6B3;
+  --favorite: #F87171;
+  --warmBeigeBg: #1E293B;
+  --card-bg: #23273A;
+  --text-primary: #F8F1EB;
+  --text-secondary: #C8D4D9;
+  --text-bright: #F9EEDB;
+  --shadow-lg: 0 14px 40px rgba(174,225,249,0.12), 0 8px 30px rgba(255,182,179,0.12), 0 4px 18px rgba(197,235,170,0.07);
+  --shadow-softer: 0 4px 14px rgba(245,182,179,0.10), 0 1.5px 8px rgba(197,235,170,0.09);
   --shadow-bright: 0 2em 11em #4ED5FF33, 0 2px 8px #FF8AC244;
-  --app-bg: #191B2A;
-  --focus-ring: 0px 0px 2px 5px #ffe18a66;
+  --app-bg: #1E293B;
+  --focus-ring: 0px 0px 2px 6px #AEE1F944;
 }
 
 /* Base layout and font */
