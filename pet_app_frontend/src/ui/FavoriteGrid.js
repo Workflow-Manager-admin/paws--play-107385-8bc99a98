@@ -1,10 +1,16 @@
 import React, { useState } from "react";
+import CertModal from "./CertModal";
 import { motion, AnimatePresence } from "framer-motion";
 
-// Modal for pet details and adoption action
-function PetProfileModal({ open, pet, onClose, onAdopt }) {
+// Animated confetti pet modal with certificate export for favorites/adoption flow
+function AnimatedAdoptModal({ open, pet, onClose }) {
+  // Show animated pet, fun confetti, and enable certificate export
+  // Use ARIA roles for accessibility
+
+  const [showCert, setShowCert] = React.useState(false);
+
   if (!open || !pet) return null;
-  // Render playful modal UI, full pet details, adoption CTA
+
   return (
     <AnimatePresence>
       <motion.div
@@ -16,140 +22,172 @@ function PetProfileModal({ open, pet, onClose, onAdopt }) {
           position: "fixed",
           zIndex: 1790,
           top: 0, left: 0, width: "100vw", height: "100vh",
-          background: "rgba(71,57,127,0.12)",
+          background: "rgba(71,57,127,0.09)",
           display: "flex", alignItems: "center", justifyContent: "center"
         }}
-        aria-modal="true" role="dialog" aria-label={`Pet profile modal: ${pet.name}`}
+        aria-modal="true" role="dialog" aria-label={`Adopt modal for ${pet.name}`}
         tabIndex={-1}
         onClick={e => { if (e.target === e.currentTarget) onClose(); }}
       >
-        <motion.div
-          initial={{ y: 48, opacity: 0.9 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 16, opacity: 0 }}
-          transition={{ type: "spring", duration: 0.42 }}
-          className="fav-modal-card"
-          style={{
-            background: "linear-gradient(110deg,var(--cotton-white),var(--petal) 88%,var(--mint) 120%)",
-            borderRadius: "2.6em",
-            boxShadow: "0 8px 40px var(--primary),0 2.5px 14px var(--mint),0 0.5px 8px var(--sky-blue)",
-            padding: "2.0em 1.1em 1.8em 1.1em",
-            maxWidth: 378,
-            minWidth: 0,
-            width: "96vw",
-            minHeight: 380,
-            position: "relative",
-            textAlign: "center",
-            outline: "4.5px solid var(--secondary)",
-            color: "var(--text-primary)",
-          }}
-          role="document"
-          tabIndex={0}
-        >
-          <button
-            aria-label="Close modal"
-            onClick={onClose}
+        {!showCert ? (
+          <motion.div
+            initial={{ y: 48, opacity: 0.9 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 16, opacity: 0 }}
+            transition={{ type: "spring", duration: 0.42 }}
             style={{
-              position: "absolute", top: 13, right: 14,
-              background: "var(--secondary)",
-              color: "var(--accent)",
-              border: "none",
-              fontSize: "2em",
-              borderRadius: "50%",
-              width: 41, height: 41,
-              boxShadow: "0 2px 12px var(--primary)",
-              cursor: "pointer",
-              zIndex: 22
+              background: "linear-gradient(110deg,var(--cotton-white),var(--petal) 88%,var(--mint) 120%)",
+              borderRadius: "2.6em",
+              boxShadow: "0 8px 40px var(--primary),0 2.5px 14px var(--mint),0 0.5px 8px var(--sky-blue)",
+              padding: "2.2em 1.5em 1.8em 1.5em",
+              maxWidth: 388,
+              minWidth: 0,
+              width: "96vw",
+              minHeight: 380,
+              position: "relative",
+              textAlign: "center",
+              outline: "4.5px solid var(--secondary)",
+              color: "var(--text-primary)"
             }}
+            role="document"
             tabIndex={0}
-            className="cert-close-btn"
-          >✕</button>
-          <motion.img
-            src={pet.img}
-            alt={pet.name}
-            initial={{ scale: 0.87, y: -20 }}
-            animate={{ scale: 1, y: 0 }}
-            transition={{ type: "spring", delay: 0.08 }}
-            style={{
-              borderRadius: "1.8em",
-              border: "4.5px solid var(--mint)",
-              width: "72%",
-              minWidth: 128, minHeight: 92, maxWidth: 202, maxHeight: 156,
-              margin: "0.5em 0 1em 0",
-              boxShadow: "0 4px 24px var(--blush-pink),0 0.5px 10px var(--secondary)",
-              objectFit: "cover",
-              background: "var(--warm-sand)"
-            }}
-          />
-          <div
-            className="fav-modal-name"
-            style={{
-              fontFamily: "'Baloo 2', cursive",
-              fontSize: "2em",
-              fontWeight: 900,
-              color: "var(--primary)",
-              textShadow: "0 0.5px 9px var(--mint),0 0.5px 4px var(--petal)",
-              marginTop: "0.1em",
-            }}
           >
-            {pet.name}
-          </div>
-          <div style={{
-            color: "var(--deep-cocoa)",
-            fontFamily: "'Quicksand','Poppins',sans-serif",
-            fontWeight: 600,
-            fontSize: "1.18em",
-            marginBottom: 7
-          }}>
-            <span>{pet.breed}</span>
-            <span style={{marginLeft: 8, fontStyle: "italic", color: "var(--text-secondary)"}}>• {pet.mood}</span>
-          </div>
-          <div style={{
-            background: "var(--warm-sand)",
-            margin: "0.8em 0",
-            borderRadius: "1.2em",
-            padding: "0.7em 1.13em 0.73em 1.13em",
-            fontSize: "1.11em",
-            color: "var(--walnut-gray)",
-            fontStyle: "italic",
-            boxShadow: "0 2.1px 18px #FFB6B62B",
-            minHeight: 43
-          }}>
-            <span style={{marginRight: 6, fontSize: 18}} role="img" aria-label="storybook">📖</span> {pet.story}
-          </div>
-          <div style={{
-            color: "var(--text-secondary)",
-            marginBottom: 13,
-            marginTop: 7,
-            fontSize: "1em"
-          }}>
-            {pet.desc}
-          </div>
-          <motion.button
-            className="hero-btn"
-            style={{
-              fontSize: "1.21em",
-              padding: "1.17em 2.3em",
-              background: "linear-gradient(101deg, var(--primary) 80%, var(--secondary) 120%)",
+            {/* Confetti SVG anim burst */}
+            <motion.div
+              style={{
+                position: "absolute", left: 0, top: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 10
+              }}
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1.03, opacity: 1 }}
+              exit={{ scale: 0.86, opacity: 0 }}
+              transition={{ duration: 0.8 }}
+              aria-hidden="true"
+            >
+              <svg width="100%" height="100%" viewBox="0 0 400 220">
+                {[...Array(14)].map((_,i)=>(
+                  <motion.circle
+                    key={i}
+                    cx={48+Math.random()*300}
+                    cy={37+Math.random()*73}
+                    r={5+i%4}
+                    fill={['var(--primary)','var(--secondary)','var(--accent)','var(--mint)','var(--blush-pink)',"#FFD36E","#B6E1FF"][i%7]}
+                    initial={{cy: 42, opacity: 0, scale: 0.8}}
+                    animate={{cy: [42, 65+Math.random()*95], opacity: [0.7,0.8,0,0], scale: [1.25,1.03,0.74]}}
+                    transition={{duration: 1.13+Math.random()*0.25, delay: 0.04*i}}
+                  />
+                ))}
+              </svg>
+            </motion.div>
+            <button
+              aria-label="Close adoption modal"
+              onClick={onClose}
+              tabIndex={0}
+              style={{
+                position: "absolute", top: 13, right: 14,
+                background: "var(--secondary)",
+                color: "var(--accent)",
+                border: "none",
+                fontSize: "2em",
+                borderRadius: "50%",
+                width: 41, height: 41,
+                boxShadow: "0 2px 12px var(--primary)",
+                cursor: "pointer",
+                zIndex: 22
+              }}
+              className="cert-close-btn"
+            >✕</button>
+            {/* Animated pet */}
+            <motion.img
+              src={pet.img}
+              alt={pet.name}
+              initial={{ scale: 0.87, y: -20 }}
+              animate={{
+                scale: [0.96,1.13,0.93,1], 
+                y: [0,-15,9,0],
+                rotate: [0,10,-10,3,0]
+              }}
+              transition={{
+                repeat: Infinity,
+                repeatType: "reverse",
+                duration: 2.2,
+                delay: 0.1
+              }}
+              style={{
+                borderRadius: "1.9em",
+                border: "4.5px solid var(--mint)",
+                width: "78%",
+                minWidth: 120, minHeight: 94, maxWidth: 212, maxHeight: 168,
+                margin: "0.6em 0 1.2em 0",
+                boxShadow: "0 4px 32px var(--blush-pink),0 0.5px 13px var(--secondary)",
+                objectFit: "cover",
+                background: "var(--warm-sand)"
+              }}
+            />
+            <div
+              className="fav-modal-name"
+              style={{
+                fontFamily: "'Baloo 2', cursive",
+                fontSize: "2.15em",
+                fontWeight: 900,
+                color: "var(--primary)",
+                textShadow: "0 0.5px 9px var(--mint),0 0.5px 4px var(--petal)",
+                marginTop: "0.1em",
+              }}
+            >
+              {pet.name}
+            </div>
+            <div style={{
               color: "var(--deep-cocoa)",
-              fontWeight: 900,
-              margin: "0.7em auto 0 auto",
-              borderRadius: "2.3em",
-              border: "3.5px solid var(--primary)",
-              boxShadow: "0 4.5px 24px var(--mint)",
-              outline: "none"
-            }}
-            tabIndex={0}
-            aria-label={`Adopt ${pet.name}`}
-            onClick={onAdopt}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <span style={{marginRight: 9, fontSize: "1.21em"}} role="img" aria-label="award">🏆</span>
-            Adopt {pet.name}
-          </motion.button>
-          <div style={{fontSize: "1.44em", marginTop: 15}}>🥰</div>
-        </motion.div>
+              fontFamily: "'Quicksand','Poppins',sans-serif",
+              fontWeight: 600,
+              fontSize: "1.13em",
+              marginBottom: 6
+            }}>
+              <span>{pet.breed || "Adorable Mutt"}</span>
+              <span style={{marginLeft: 8, fontStyle: "italic", color: "var(--text-secondary)"}}>• {pet.mood||"sweet"}</span>
+            </div>
+            <div style={{
+              background: "var(--warm-sand)",
+              margin: "0.65em 0",
+              borderRadius: "1.1em",
+              padding: "0.55em 0.93em 0.59em 0.93em",
+              fontSize: "1.05em",
+              color: "var(--walnut-gray)",
+              fontStyle: "italic",
+              boxShadow: "0 2.1px 18px #FFB6B62B",
+              minHeight: 41
+            }}>
+              <span style={{marginRight: 6, fontSize: 16}} role="img" aria-label="storybook">📖</span> {pet.story||"Ready for a home!"}
+            </div>
+            <motion.button
+              className="hero-btn"
+              style={{
+                fontSize: "1.13em",
+                padding: "1.01em 2.1em",
+                background: "linear-gradient(101deg, var(--primary) 80%, var(--secondary) 120%)",
+                color: "var(--deep-cocoa)",
+                fontWeight: 900,
+                margin: "0.7em auto 0 auto",
+                borderRadius: "2.3em",
+                border: "3.1px solid var(--primary)",
+                boxShadow: "0 4.5px 20px var(--mint)",
+                outline: "none"
+              }}
+              tabIndex={0}
+              aria-label={`Show Adoption Certificate for ${pet.name}`}
+              onClick={()=>setShowCert(true)}
+              whileHover={{ scale: 1.08 }}
+              whileTap={{ scale: 0.96 }}
+            >
+              <span style={{marginRight: 9, fontSize: "1.21em"}} role="img" aria-label="award">🏆</span>
+              Show Adoption Certificate
+            </motion.button>
+            <div style={{fontSize: "1.39em", marginTop: 13}}>🎉</div>
+            <div style={{fontSize: "0.96em", color: "var(--sky-blue)", marginTop: 9}}>Fun fact: Download & print your certificate!</div>
+          </motion.div>
+        ) : (
+          <CertModal open={showCert} onClose={()=>{setShowCert(false);onClose();}} petName={pet.name||"Pet"} />
+        )}
       </motion.div>
     </AnimatePresence>
   );
@@ -205,13 +243,11 @@ export default function FavoriteGrid({ favorites = [] }) {
   }
   function closeModal() {
     setShowModal(false);
-    setTimeout(()=>setSelected(null), 400);
+    setTimeout(()=>setSelected(null), 410);
   }
-  function handleAdoptFromModal() {
-    // Show confetti, could reuse CertModal in parent as well
-    window.alert(`🎉 Congrats! You adopted ${selected.name}. (In a real app, this triggers badge/modal etc.)`);
-    closeModal();
-  }
+
+  // For adoption: now handled by animated modal with certificate
+  // The modal itself triggers the certificate and celebration
 
   return (
     <div className="favorites-grid" id="favorites" style={{
@@ -223,7 +259,7 @@ export default function FavoriteGrid({ favorites = [] }) {
       gap: "1.6em"
     }}>
       {/* Modal popup */}
-      <PetProfileModal open={showModal && !!selected} pet={selected} onClose={closeModal} onAdopt={handleAdoptFromModal} />
+      <AnimatedAdoptModal open={showModal && !!selected} pet={selected} onClose={closeModal} />
       {!hasFavs ? (
         <motion.div
           className="fav-card"
