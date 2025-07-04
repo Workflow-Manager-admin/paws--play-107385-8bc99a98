@@ -30,7 +30,7 @@ export default function BadgeSection({ badges = [] }) {
       justifyContent: "center",
       alignItems: "center",
       gap: "3em",
-      background: "var(--mint)",
+      background: "var(--soft-sage)",
       borderRadius: "2.1em",
       minHeight: 80,
       boxShadow: "var(--shadow-softer)",
@@ -41,7 +41,7 @@ export default function BadgeSection({ badges = [] }) {
       {allLocked && (
         <div
           style={{
-            color: "var(--accent)",
+            color: "var(--coral-red)",
             textAlign: "center",
             width: "100%",
             fontWeight: 900,
@@ -69,18 +69,18 @@ export default function BadgeSection({ badges = [] }) {
                 width: 62,
                 height: 62,
                 borderRadius: "30em",
-                background: "var(--accent)",
+                background: "var(--blush-pink)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: "2.18em",
-                boxShadow: "0 2px 17px var(--primary), 0 1.5px 6px var(--secondary)",
-                color: "var(--favorite)",
+                boxShadow: "0 4px 32px var(--soft-sage), 0 1.5px 8px var(--coral-red)",
+                color: "var(--coral-red)",
                 position: "relative",
                 margin: "0 10px",
-                outline: "3.2px solid var(--mint)",
+                outline: "3.2px solid var(--sky-blue)",
                 outlineOffset: "0px",
-                filter: "drop-shadow(0 0 17px var(--lavender))"
+                filter: "drop-shadow(0 0 17px var(--coral-red))"
               }}
               title={badge.label}
             >
@@ -92,10 +92,10 @@ export default function BadgeSection({ badges = [] }) {
               style={{
                 width: 58,
                 height: 58,
-                background: "var(--secondary)",
-                opacity: 0.21,
+                background: "var(--soft-sage)",
+                opacity: 0.19,
                 borderRadius: "29px",
-                color: "var(--primary)",
+                color: "var(--walnut-gray)",
                 fontSize: "2em",
                 display: "flex",
                 alignItems: "center",

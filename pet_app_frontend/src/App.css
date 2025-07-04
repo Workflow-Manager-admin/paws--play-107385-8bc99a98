@@ -1,44 +1,81 @@
 :root {
-  --primary: #FFB6B3;           /* Primary Accent (blush pastel pink) */
-  --secondary: #C5EBAA;         /* Secondary Accent (minty calm pastel green) */
-  --accent: #AEE1F9;            /* Contrast Button (soft blue) */
-  --mint: #C5EBAA;              /* Same as secondary for simplicity */
-  --lavender: #CAB8FF;          /* Supporting pastel purple */
-  --pop-sky: #AEE1F9;           /* Re-using contrast blue for pop/sky */
-  --petal: #FFB6B3;             /* Re-using as petal pink for highlight */
-  --favorite: #F87171;          /* Favorite Heart */
-  --warmBeigeBg: #FFF7EC;       /* Updated Cozy Background */
-  --text-primary: #4A4A4A;      /* Primary readable text */
-  --text-secondary: #757575;    /* Secondary text for subtler use */
-  --text-bright: #FFFFFF;
-  --card-bg: #F9EEDB;           /* Cozy card base */
-  --shadow-lg: 0 8px 32px 0 rgba(255, 182, 179, 0.15), 0 5px 36px 0 rgba(174, 225, 249, 0.08), 0 2.5px 8px 0 rgba(197, 235, 170, 0.15);
-  --shadow-softer: 0 4px 24px rgba(174,225,249,0.14), 0 2px 10px rgba(197,235,170,0.09);
-  --shadow-bright: 0 3em 14em #FFD9B633, 0 3px 10px #AEE1F94D;
-  --border-radius-xl: 2.2em;     /* Increased for soft pill look */
+  /* Modern Soft Emotional Palette */
+  --blush-pink: #F9C6C9;    /* buttons/CTAs/highlights */
+  --soft-sage: #C9E4CA;     /* mood tags/backgrounds */
+  --cotton-white: #FFFBF7;  /* app background */
+  --walnut-gray: #4A4A4A;   /* primary text */
+  --warm-sand: #F5E9CF;     /* cards and neutral UI */
+  --sky-blue: #A9D6E5;      /* secondary buttons/actions */
+  --deep-cocoa: #2C2C2C;    /* strong headings */
+  --coral-red: #F67280;     /* favorite/alert/heart actions */
+
+  /* Variable roles mapped for app usage */
+  --primary: var(--blush-pink);
+  --secondary: var(--sky-blue);
+  --accent: var(--coral-red);
+
+  --mint: var(--soft-sage);
+  --petal: var(--blush-pink);
+  --favorite: var(--coral-red);
+
+  --warmBeigeBg: var(--warm-sand);
+  --card-bg: var(--warm-sand);
+  --mood-bg: var(--soft-sage);
+
+  --text-primary: var(--walnut-gray);
+  --text-secondary: #5B6466;
+  --text-bright: var(--deep-cocoa);
+
+  --heading-text: var(--deep-cocoa);
+
+  --border-radius-xl: 2.2em;
   --border-radius-2xl: 3.3em;
-  --app-bg: var(--warmBeigeBg);
-  --focus-ring: 0px 0px 2px 5px #AEE1F933;
+  --app-bg: var(--cotton-white);
+
+  /* Custom shadows for emotional softness */
+  --shadow-lg: 0 8px 32px 0 rgba(249, 198, 201, 0.14), 0 8px 40px 0 rgba(169, 214, 229, 0.13), 0 2.5px 8px 0 rgba(201, 228, 202, 0.23);
+  --shadow-softer: 0 4px 24px rgba(249, 198, 201, 0.11), 0 2px 10px rgba(201, 228, 202, 0.13);
+  --shadow-bright: 0 3em 14em #F5E9CF33, 0 3px 10px #A9D6E533;
+  --focus-ring: 0px 0px 2px 5px #A9D6E570;
 }
 [data-theme="dark"] {
-  --primary: #AEE1F9;
-  --secondary: #FFB6B3;
-  --accent: #F87171;
-  --mint: #C5EBAA;
-  --lavender: #CAB8FF;
-  --pop-sky: #AEE1F9;
-  --petal: #FFB6B3;
-  --favorite: #F87171;
-  --warmBeigeBg: #1E293B;
-  --card-bg: #23273A;
-  --text-primary: #F8F1EB;
-  --text-secondary: #C8D4D9;
-  --text-bright: #F9EEDB;
-  --shadow-lg: 0 14px 40px rgba(174,225,249,0.12), 0 8px 30px rgba(255,182,179,0.12), 0 4px 18px rgba(197,235,170,0.07);
-  --shadow-softer: 0 4px 14px rgba(245,182,179,0.10), 0 1.5px 8px rgba(197,235,170,0.09);
-  --shadow-bright: 0 2em 11em #4ED5FF33, 0 2px 8px #FF8AC244;
-  --app-bg: #1E293B;
-  --focus-ring: 0px 0px 2px 6px #AEE1F944;
+  /* Dark-mode mappings: preserve emotional tone and contrast */
+  --blush-pink: #F9C6C9;
+  --soft-sage: #43675a;
+  --cotton-white: #22201D;
+  --walnut-gray: #f1e6e5;
+  --warm-sand: #191815;
+  --sky-blue: #8dbdc9;
+  --deep-cocoa: #fffaf6;
+  --coral-red: #F67280;
+
+  --primary: var(--sky-blue);
+  --secondary: var(--blush-pink);
+  --accent: var(--coral-red);
+
+  --mint: var(--soft-sage);
+  --petal: var(--blush-pink);
+  --favorite: var(--coral-red);
+
+  --warmBeigeBg: var(--warm-sand);
+  --card-bg: #23231c;
+  --mood-bg: #2f4138;
+
+  --text-primary: var(--walnut-gray);
+  --text-secondary: #b3babd;
+  --text-bright: var(--deep-cocoa);
+
+  --heading-text: var(--deep-cocoa);
+
+  --border-radius-xl: 2.2em;
+  --border-radius-2xl: 3.3em;
+  --app-bg: var(--cotton-white);
+
+  --shadow-lg: 0 14px 40px rgba(169,214,229,0.21), 0 8px 30px rgba(249,198,201,0.15), 0 4px 18px rgba(201,228,202,0.13);
+  --shadow-softer: 0 4px 14px rgba(229,198,249,0.09), 0 1.5px 8px rgba(169,214,229,0.13);
+  --shadow-bright: 0 2em 11em #A9D6E533, 0 2px 8px #F9C6C966;
+  --focus-ring: 0px 0px 2px 6px #A9D6E570;
+  --app-bg: #181818;
 }
 
 /* Base layout and font */

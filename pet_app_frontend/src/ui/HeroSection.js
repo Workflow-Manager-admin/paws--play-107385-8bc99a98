@@ -37,9 +37,11 @@ export default function HeroSection({ onAdopt }) {
       <button
         className="hero-btn bouncy"
         style={{
-          background: "linear-gradient(93deg, var(--primary), var(--secondary) 90%, var(--mint))",
-          color: "var(--text-bright)",
-          boxShadow: "0 5px 38px var(--primary), 0 1.5px 18px var(--mint)"
+          background: "linear-gradient(94deg, var(--blush-pink), var(--sky-blue) 82%, var(--soft-sage) 95%)",
+          color: "var(--deep-cocoa)",
+          fontWeight: 800,
+          fontSize: "1.18em",
+          boxShadow: "0 6px 32px var(--blush-pink), 0 1.5px 12px var(--sky-blue)"
         }}
         onClick={onAdopt}
       >Start Swiping!</button>

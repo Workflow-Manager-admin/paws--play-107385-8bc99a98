@@ -11,11 +11,11 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: 'Poppins', 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  background: var(--app-bg, #FFF6ED);
+  background: var(--cotton-white, #FFFBF7);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: var(--text-primary, #333);
+  color: var(--walnut-gray, #4A4A4A);
   transition: background 0.4s, color 0.3s;
 }
 

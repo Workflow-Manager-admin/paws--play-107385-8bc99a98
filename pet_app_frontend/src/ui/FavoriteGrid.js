@@ -13,21 +13,22 @@ export default function FavoriteGrid({ favorites = [] }) {
         <div
           className="fav-card"
           style={{
-            minHeight: 142,
+            minHeight: 146,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            color: "var(--text-secondary)",
-            background: "linear-gradient(94deg, var(--warmBeigeBg) 80%, var(--mint))",
-            border: "2.2px dashed var(--mint)",
+            color: "var(--sky-blue)",
+            background: "linear-gradient(94deg, var(--warm-sand) 80%, var(--soft-sage))",
+            border: "2.2px dashed var(--soft-sage)",
             fontSize: "1.09em",
             margin: "2.2em auto",
-            boxShadow: "none"
+            fontWeight: 700,
+            boxShadow: "0 1.2px 7px var(--soft-sage)"
           }}
         >
-          <span style={{ fontSize: "2.3em", marginBottom: "0.3em" }}>💖</span>
-          <span>No favorites yet!<br />Tap <b>💖</b> to add your first favorite.</span>
+          <span style={{ fontSize: "2.5em", marginBottom: "0.3em" }}>💖</span>
+          <span>No favorites yet!<br />Tap <b style={{color:"var(--coral-red)"}}>💖</b> to add your first favorite.</span>
         </div>
       ) : (
         favorites.map((pet, i) => (
@@ -36,9 +37,10 @@ export default function FavoriteGrid({ favorites = [] }) {
             <span
               className="fav-pet-name"
               style={{
-                color: "var(--pop-sky)",
+                color: "var(--deep-cocoa)",
                 fontWeight: 700,
-                textShadow: "0 0.5px 7px var(--accent), 0 0 3px white"
+                fontSize: "1.08em",
+                textShadow: "0 0.5px 9px var(--blush-pink), 0 0 3px var(--cotton-white)"
               }}
             >{pet.name}</span>
           </div>
