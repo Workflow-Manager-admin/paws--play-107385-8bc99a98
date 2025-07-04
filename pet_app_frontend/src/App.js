@@ -1,48 +1,62 @@
-import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { ThemeProvider, ThemeContext } from "./ui/ThemeContext";
+import Navbar from "./ui/Navbar";
+import HeroSection from "./ui/HeroSection";
+import SwipeCard from "./ui/SwipeCard";
+import FavoriteGrid from "./ui/FavoriteGrid";
+import BadgeSection from "./ui/BadgeSection";
+import CertModal from "./ui/CertModal";
+import TipsSection from "./ui/TipsSection";
+import { AnimatePresence } from "framer-motion";
 
 // PUBLIC_INTERFACE
 function App() {
-  const [theme, setTheme] = useState('light');
-
-  // Effect to apply theme to document element
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
-
-  // PUBLIC_INTERFACE
-  const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light');
-  };
+  // Demo modal adoption/certificate
+  const [certModal, setCertModal] = useState(false);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <button 
-          className="theme-toggle" 
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
-        </button>
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>
-          Current theme: <strong>{theme}</strong>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <ThemeContext.Consumer>
+        {({ theme, toggleTheme }) => (
+          <div className="App">
+            <Navbar onCta={() => setCertModal(true)} />
+            {/* Playful theme toggle floating button */}
+            <button
+              className="theme-toggle bouncy"
+              onClick={toggleTheme}
+              aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+              style={{
+                position: "fixed",
+                top: 20, right: 20,
+                zIndex: 100,
+              }}
+            >
+              {theme === 'light' ? '🌙 Dark' : '☀️ Light'}
+            </button>
+
+            <main style={{
+              maxWidth: 650, margin: "0 auto", paddingBottom: 80,
+              display: "flex", flexDirection: "column", alignItems: "center"
+            }}>
+              <HeroSection onAdopt={() => window.scrollTo({top: 340, behavior: 'smooth'})} />
+              <section className="swipe-section" id="swipe">
+                <SwipeCard />
+              </section>
+              <FavoriteGrid />
+              <BadgeSection />
+              {/* Animated modal */}
+              <AnimatePresence>
+                {certModal && (
+                  <CertModal open={certModal} onClose={() => setCertModal(false)}/>
+                )}
+              </AnimatePresence>
+              <TipsSection />
+            </main>
+          </div>
+        )}
+      </ThemeContext.Consumer>
+    </ThemeProvider>
   );
 }
 

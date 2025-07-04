@@ -1,104 +1,303 @@
-/* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --text-primary: #282c34;
-  --text-secondary: #61dafb;
-  --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --primary: #FFB6B6;
+  --secondary: #B6E1FF;
+  --accent: #FFD9B6;
+  --mint: #B6FFDE;
+  --warmBeigeBg: #FFF6ED;
+  --text-primary: #3f2925;
+  --text-secondary: #797089;
+  --card-bg: #fffaf6;
+  --shadow-lg: 0px 8px 24px rgba(255,183,182,0.13), 0 4px 24px rgba(71,198,255,0.08), 0 1.5px 4px rgba(188,221,229,0.13);
+  --shadow-softer: 0px 4px 22px rgba(200,220,255,0.11), 0 1px 3px rgba(220,188,255,0.07);
+  --border-radius-xl: 1.5em;
+  --border-radius-2xl: 2.5em;
+  --app-bg: var(--warmBeigeBg);
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
-  --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --primary: #B6E1FF;
+  --secondary: #FFB6B6;
+  --accent: #FFD9B6;
+  --mint: #7fdacb;
+  --warmBeigeBg: #191a20;
+  --card-bg: #282c35;
+  --text-primary: #FAF6F3;
+  --text-secondary: #cccadd;
+  --shadow-lg: 0 8px 24px rgba(90,130,200,0.17), 0 4px 14px rgba(110,130,188,0.14);
+  --shadow-softer: 0px 4px 22px rgba(120,120,180,0.17), 0 1px 3px rgba(70,88,117,0.07);
+  --app-bg: #191a20;
+}
+
+html, body, #root, .App {
+  min-height: 100vh;
+  background: var(--app-bg);
 }
 
 .App {
   text-align: center;
-  background-color: var(--bg-primary);
+  background: var(--app-bg);
   color: var(--text-primary);
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background 0.5s, color 0.3s;
+  font-family: 'Poppins', 'Lato', Arial, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+a:focus, a:hover { color: var(--secondary); }
+
+button {
+  border: none;
+  border-radius: var(--border-radius-xl);
+  background: linear-gradient(90deg, var(--primary) 70%, var(--accent));
+  color: var(--text-primary);
+  padding: 0.6em 1.4em;
+  font-family: 'Quicksand', 'Poppins', sans-serif;
+  font-size: 1.08em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: box-shadow 0.12s, background 0.34s, transform 0.16s;
+  box-shadow: var(--shadow-softer);
+  margin: 0.5em;
+  outline: none;
+}
+button.bouncy { animation: bounce 0.85s infinite; }
+button:active   { transform: scale(0.98); }
+button:focus-visible { outline: 2px solid var(--accent); background: var(--secondary); }
+
+header.navbar {
+  width: 100vw;
+  max-width: 100%;
+  padding: 0.6em 0;
+  box-shadow: var(--shadow-softer);
+  background: var(--card-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom-left-radius: var(--border-radius-xl);
+  border-bottom-right-radius: var(--border-radius-xl);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
 }
 
-.App-header {
-  background-color: var(--bg-secondary);
-  min-height: 100vh;
+.brand-logo {
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2em;
+  box-shadow: var(--shadow-softer);
+  margin-left: 0.6em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.1em;
+  margin-right: 1em;
+}
+
+.nav-link, .nav-btn {
+  padding: 0.35em 0.95em;
+  border-radius: var(--border-radius-xl);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: 'Baloo 2', cursive;
+  font-weight: 600;
+  font-size: 1.18em;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+}
+.nav-link:hover, .nav-link.active {
+  background: var(--accent);
+}
+
+.hero {
+  margin: 0 auto;
+  max-width: 520px;
+  padding: 2.2em 1.1em 2.7em 1.1em;
+  border-radius: var(--border-radius-2xl);
+  background: linear-gradient(138deg, var(--mint) 50%, var(--accent) 100%);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  z-index: 8;
+}
+.hero-headline {
+  font-family: 'Baloo 2', cursive;
+  font-size: 2.2em;
+  font-weight: 700;
+  margin-bottom: 0.15em;
+}
+.hero-description {
+  font-size: 1.14em;
+  margin-bottom: 1.2em;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-secondary);
+}
+.hero-btn {
+  font-size: 1.21em;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  border-radius: var(--border-radius-xl);
+  padding: 0.7em 2.4em;
+  box-shadow: var(--shadow-lg);
+  transition: background 0.2s, box-shadow 0.2s, transform 0.18s;
+}
+.hero-btn:hover { background: var(--mint); color: var(--text-primary); }
+
+.swipe-section {
+  margin: 1.8em auto;
+  max-width: 390px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swipe-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius-2xl);
+  box-shadow: var(--shadow-lg);
+  width: 320px;
+  min-height: 410px;
+  margin: 0 1px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: var(--text-primary);
-  transition: background-color 0.3s ease;
+  padding: 1.3em 0.8em 1.2em 0.8em;
+  position: relative;
+  overflow: hidden;
+  will-change: transform;
+}
+.swipe-card img {
+  width: 90%;
+  height: 215px;
+  object-fit: cover;
+  border-radius: 1.7em;
+  margin-bottom: 0.8em;
+  box-shadow: 0 3.5px 17px rgba(180,140,77,0.07);
+}
+.swipe-card .pet-name {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.2em;
+  margin-bottom: 0.3em;
+}
+.swipe-card .pet-desc {
+  color: var(--text-secondary);
+  font-family: 'Poppins', sans-serif;
+  font-size: 1em;
+  margin-bottom: 0.9em;
+}
+
+.heart-btn {
+  background: var(--accent);
+  border-radius: 50%;
+  width: 46px; height: 46px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3em;
+  color: var(--primary);
+  margin: 0.2em 0.55em;
+  box-shadow: var(--shadow-softer);
+  transition: background 0.18s, color 0.18s, transform 0.14s;
+  border: none;
+}
+.heart-btn:active { transform: scale(1.12); background: var(--primary); color: var(--secondary); }
+
+.favorites-grid {
+  margin: 2.5em auto 0 auto;
+  width: 90%;
+  max-width: 650px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(128px, 1fr));
+  grid-gap: 1.2em;
+}
+.fav-card {
+  background: var(--card-bg);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-softer);
+  display: flex; flex-direction: column; align-items: center;
+  padding: 0.7em 0.3em 0.4em 0.3em;
+  overflow: hidden;
+  min-height: 150px;
+  position:relative;
+}
+.fav-pet-img {
+  width: 80%;
+  max-width: 98px;
+  border-radius: 1em;
+  box-shadow: 0 2px 10px rgba(140,120,90,0.08);
+  margin-bottom: 0.5em;
+}
+.fav-pet-name {
+  font-family: 'Baloo 2', cursive;
+  color: var(--primary);
+  font-size: 1.07em;
+}
+
+.badge-section {
+  background: var(--mint);
+  border-radius: var(--border-radius-xl);
+  margin: 1.1em auto;
+  padding: 1.15em 0.9em;
+  box-shadow: var(--shadow-softer);
+  max-width: 560px;
+  display: flex; align-items: center; justify-content: center; gap: 2em;
+}
+.badge-placeholder {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--secondary);
+  opacity: 0.32;
+}
+.cert-modal {
+  background: var(--card-bg);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  padding: 2em 1.3em;
+  max-width: 390px;
+  margin: 0 auto;
+  z-index:1001;
   position: relative;
 }
-
-.App-link {
-  color: var(--text-secondary);
-  transition: color 0.3s ease;
-}
-
-.theme-toggle {
+.cert-close-btn {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: var(--button-bg);
-  color: var(--button-text);
-  border: none;
-  border-radius: 8px;
-  padding: 10px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  top: 16px; right: 16px;
+  background: var(--secondary); color: #fff;
+  font-size: 1.33em;
+  border-radius: 50%;
+  width: 39px; height: 39px;
+  border: none; display: flex; align-items: center; justify-content: center;
+}
+.tips-section {
+  width: 94vw; max-width: 650px;
+  margin: 2.1em auto 2.3em auto;
+  display: flex; flex-wrap: wrap; gap: 0.85em;
+}
+.tip-card {
+  background: var(--accent);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-softer);
+  padding: 0.8em 1.1em;
+  font-size: 1.02em;
+  font-family: 'Poppins',sans-serif;
+  min-width: 135px;
+  flex: 1 0 30%;
 }
 
-.theme-toggle:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  opacity: 0.9;
+@media (max-width: 800px) {
+  .hero { max-width: 97vw; }
+  .swipe-section { max-width: 99vw; }
+  .badge-section, .favorites-grid, .tips-section { max-width: 97vw; }
 }
 
-.theme-toggle:active {
-  transform: translateY(0);
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive design for mobile */
-@media (max-width: 768px) {
-  .theme-toggle {
-    top: 10px;
-    right: 10px;
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+@media (max-width: 600px) {
+  .nav-links { gap: 0.5em; }
+  .brand-logo { width: 36px; height: 36px; font-size: 1.2em;}
+  .hero { padding: 1.2em 0.2em 1.5em 0.2em;}
+  .swipe-card { width: 99vw; min-width: 93vw; }
 }
