@@ -5,46 +5,58 @@ import { fetchPetImages } from "../pexelsApi";
 /**
  * Immersive fullscreen hero for the landing page.
  * Features (Updated spec):
- * - Fullscreen Pexels pet image with soft vignette overlay
- * - Modern, emotional, big headline and subheadline with pastel emojis
- * - Bouncy blush pink pill CTA: "Start Swiping 🐾"
- * - Playful mini-feature row: ❤️ Save Pets · 🎉 Adopt Virtually · 🛋️ Try in Your Room
- * - Soft pastel palette, modern fonts, emotional copy!
+ * - Fullscreen Pexels pet image with soft pastel vignette (animates in)
+ * - Modern, huge, emotional headline with soft bouncy CTA in blush-pink
+ * - Subheadline with pastel emoji, large font, and playful caption
+ * - Mini row of features (emoji icon + label) in pill/soft-card style
+ * - Fully responsive, matching margin/padding/guidelines and palette
  */
 // PUBLIC_INTERFACE
 export default function HeroSection({ onAdopt }) {
-  // Fetch a Pexels pet photo for visual impact
-  const [bgPhoto, setBgPhoto] = useState(null);
+  // Remote fetch: fullscreen Pexels pet photo, ideally landscape for wow effect
+  const [bgUrl, setBgUrl] = useState(null);
   const [photographer, setPhotographer] = useState("");
   const [loading, setLoading] = useState(true);
+  // Feature list per latest spec
+  const features = [
+    { icon: "💖", label: "Save Pets" },
+    { icon: "🎉", label: "Adopt Virtually" },
+    { icon: "🛋️", label: "Try in Your Room" }
+  ];
 
   useEffect(() => {
-    fetchPetImages("cute puppy OR kitten", 6, 1)
+    setLoading(true);
+    fetchPetImages("cute puppy OR kitten", 8, 1)
       .then(({ photos }) => {
         if (photos && photos.length) {
-          const best = photos.find(
-            ph => (ph.width >= ph.height && ph.src.landscape) || ph.src.original
+          // Prefer landscape/wide photo, fallback to first
+          let best = photos.find(
+            ph => (ph.width > ph.height) && ph.src.landscape
           ) || photos[0];
-          setBgPhoto(best.src.landscape || best.src.original || best.src.medium);
+          setBgUrl(best.src.landscape || best.src.original || best.src.medium);
           setPhotographer(best.photographer || "");
         }
         setLoading(false);
       })
       .catch(() => {
-        setBgPhoto(
-          "https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&w=800"
-        );
+        setBgUrl("https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&w=900");
         setPhotographer("Pexels");
         setLoading(false);
       });
   }, []);
 
-  // Mini features per design: ❤️ Save · 🎉 Adopt Virtually · 🛋️ Try in Room
-  const features = [
-    { icon: "❤️", label: "Save Pets" },
-    { icon: "🎉", label: "Adopt Virtually" },
-    { icon: "🛋️", label: "Try in Your Room" }
-  ];
+  // Soft, modern vignette overlay (pink gradient with transparent fade to edges)
+  const vignetteStyle = {
+    position: "absolute",
+    inset: 0,
+    width: "100vw",
+    height: "100%",
+    minHeight: "97vh",
+    zIndex: 1,
+    pointerEvents: "none",
+    background:
+      "radial-gradient(ellipse at 50% 65%, rgba(249,198,201,0.60) 14%, rgba(201,228,202,0.10) 60%, rgba(44,44,44,0.14) 100%), linear-gradient(180deg, rgba(255,251,247,0.23) 20%, rgba(42,30,55,0.17) 90%)"
+  };
 
   return (
     <section
@@ -56,7 +68,6 @@ export default function HeroSection({ onAdopt }) {
         left: "50%",
         marginLeft: "-50vw",
         marginRight: "-50vw",
-        padding: 0,
         minHeight: "97vh",
         display: "flex",
         flexDirection: "column",
@@ -68,17 +79,17 @@ export default function HeroSection({ onAdopt }) {
       }}
       aria-label="Pet Adoption App Hero"
     >
-      {/* Background hero image from Pexels with fade-in & vignette */}
+      {/* Animated fade-in photo background */}
       <AnimatePresence>
-        {bgPhoto && (
+        {bgUrl && (
           <motion.img
-            key={bgPhoto}
-            src={bgPhoto}
+            key={bgUrl}
+            src={bgUrl}
             alt="Adorable pet background"
-            initial={{ opacity: 0, scale: 1.07 }}
+            initial={{ opacity: 0, scale: 1.06 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.12 }}
+            transition={{ duration: 1.18 }}
             style={{
               position: "absolute",
               top: 0,
@@ -88,7 +99,7 @@ export default function HeroSection({ onAdopt }) {
               height: "100%",
               minHeight: "97vh",
               zIndex: 0,
-              filter: "brightness(0.93) saturate(1.09)",
+              filter: "brightness(0.93) saturate(1.10)",
               willChange: "transform, opacity",
               pointerEvents: "none",
               userSelect: "none"
@@ -97,128 +108,119 @@ export default function HeroSection({ onAdopt }) {
           />
         )}
       </AnimatePresence>
-      {/* Soft, updated vignette overlay */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          width: "100vw",
-          height: "100%",
-          minHeight: "97vh",
-          zIndex: 1,
-          pointerEvents: "none",
-          background:
-            "radial-gradient(ellipse at 50% 65%, rgba(249,198,201,0.62) 3%, rgba(44,44,44,0.08) 70%, rgba(44,44,44,0.21) 100%), linear-gradient(180deg, rgba(255,251,247,0.33) 12%, rgba(42,30,55,0.10) 80%)"
-        }}
-      />
-      {/* Hero Page Content */}
+      {/* Vignette effect overlays hero image */}
+      <div aria-hidden="true" style={vignetteStyle} />
+
+      {/* HERO CONTENT */}
       <motion.div
         className="hero-content"
-        initial={{ opacity: 0, y: 92 }}
+        initial={{ opacity: 0, y: 86 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.09, type: "spring", stiffness: 62 }}
+        transition={{ duration: 1.08, delay: 0.10, type: "spring", stiffness: 54 }}
         style={{
           position: "relative",
           zIndex: 2,
           width: "100%",
-          maxWidth: 520,
-          margin: "15vh auto 9vh auto",
+          maxWidth: 540,
+          margin: "14vh auto 11vh auto",
+          padding: "1.4em 1.0em 0.8em 1.0em",
           textAlign: "center",
           color: "var(--heading-text)",
-          padding: "1.6em 1em 0.8em 1em",
-          filter: "drop-shadow(0 6.5px 55px var(--blush-pink))"
+          filter: "drop-shadow(0 8.5px 55px var(--blush-pink))"
         }}
       >
+        {/* Animated paw/emoji up top for energy */}
         <motion.span
           style={{
             display: "block",
-            margin: "0 auto 0.47em auto",
-            fontSize: "2.1em",
-            filter: "drop-shadow(0 1.5px 24px var(--primary))"
+            margin: "0 auto 0.48em auto",
+            fontSize: "2.4em",
+            filter: "drop-shadow(0 2.5px 32px var(--primary))"
           }}
           animate={{
-            y: [0, -7, 3, 0],
-            rotate: [0, -13, 15, -5, 0]
+            y: [0, -8, 2, 0],
+            rotate: [0, -12, 11, -5, 0]
           }}
-          transition={{ duration: 2.19, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 2.29, repeat: Infinity, ease: "easeInOut" }}
         >🐾</motion.span>
-        {/* Headline */}
+        {/* Emotional, oversized headline */}
         <h1
           className="hero-headline"
           style={{
             fontFamily: "'Baloo 2', 'Fredoka One', cursive",
-            fontSize: "clamp(2.15rem, 6vw, 2.95rem)",
+            fontSize: "clamp(2.28rem, 6vw, 2.98rem)",
             fontWeight: 900,
             color: "var(--heading-text)",
-            letterSpacing: "0.012em",
-            lineHeight: 1.07,
+            letterSpacing: "0.011em",
+            lineHeight: 1.05,
             margin: "0 0 0.1em 0",
-            textShadow: "0 5px 39px var(--blush-pink), 0 1px 13px var(--soft-sage), 0 0.5px 5px var(--sky-blue)"
+            textShadow: "0 6px 45px var(--blush-pink), 0 1px 19px var(--soft-sage), 0 1.5px 7px var(--sky-blue)"
           }}
         >
           Love at First Swipe.
         </h1>
+        {/* Uplifting subheadline */}
         <p
           className="hero-description"
           style={{
             fontFamily: "'Poppins', 'Lato', sans-serif",
             color: "var(--text-secondary)",
-            fontSize: "clamp(1.16rem, 2.7vw, 1.28rem)",
-            margin: "0.1em 0 1.25em 0",
-            fontWeight: 600
+            fontSize: "clamp(1.19rem, 2.8vw, 1.33rem)",
+            margin: "0.1em 0 1.23em 0",
+            fontWeight: 700
           }}
         >
-          Discover pets who'll steal your heart 💝<br />
-          Save cuties, adopt virtually, and try them at home—powered by Pexels<br />
+          Discover pets that'll steal your heart{" "}
+          <span role="img" aria-label="heart" style={{ fontSize: "1.2em" }}>💝</span>
+          <br />
+          Save favorites, adopt virtually, and try them at home—powered by live Pexels photos.
+          <br />
           <span style={{ color: "var(--sky-blue)", fontSize: "0.95em" }}>
             {photographer ? `Photo: ${photographer}` : "Photos by Pexels"}
           </span>
         </p>
-        {/* CTA BUTTON */}
+        {/* Main fullscreen CTA: animated blush-pink bouncy button */}
         <motion.button
           className="hero-btn bouncy"
           style={{
-            background:
-              "linear-gradient(101deg, var(--blush-pink) 65%, var(--sky-blue) 100%)",
+            background: "linear-gradient(101deg, var(--blush-pink) 65%, var(--sky-blue) 100%)",
             color: "#fff",
             fontWeight: 900,
             fontFamily: "'Quicksand','Baloo 2','Fredoka One', cursive",
-            fontSize: "clamp(1.26em, 2vw, 1.5em)",
-            padding: "0.9em 2.7em",
+            fontSize: "clamp(1.28em, 2vw, 1.55em)",
+            padding: "0.95em 2.8em",
             border: "4px solid var(--mint)",
-            borderRadius: "2.6em",
-            boxShadow:
-              "0 14px 40px var(--primary), 0 2.5px 24px var(--mint), 0 0.5px 14px var(--soft-sage)",
-            marginTop: "0.45em",
+            borderRadius: "2.7em",
+            boxShadow: "0 18px 54px var(--primary), 0 3.5px 24px var(--mint), 0 0.5px 18px var(--soft-sage)",
+            marginTop: "0.48em",
+            marginBottom: "0.8em",
             cursor: "pointer",
-            transition: "box-shadow 0.16s, background 0.21s, transform 0.13s"
+            transition: "box-shadow 0.16s, background 0.19s, transform 0.13s"
           }}
-          onClick={onAdopt}
           tabIndex={0}
+          aria-label="Start swiping pets!"
           whileHover={{
             scale: 1.09,
-            background:
-              "linear-gradient(99deg, var(--secondary) 75%, var(--blush-pink) 100%)",
+            background: "linear-gradient(97deg, var(--secondary) 75%, var(--blush-pink) 100%)",
             color: "#fff"
           }}
           whileTap={{ scale: 0.96 }}
-          aria-label="Start swiping pets!"
+          onClick={onAdopt}
         >
           Start Swiping <span style={{
-            fontSize: "1.32em",
+            fontSize: "1.34em",
             marginLeft: 14,
-            filter: "drop-shadow(0 2px 7px var(--favorite))"
+            filter: "drop-shadow(0 2px 17px var(--coral-red))"
           }}>🐾</span>
         </motion.button>
-        {/* Mini-feature row */}
+        {/* MINI-FEATURE ROW (emoji + text) */}
         <div
           className="hero-features-mini"
           style={{
-            margin: "2.31em auto 0.77em auto",
+            margin: "2.31em auto 1em auto",
             display: "flex",
             justifyContent: "space-around",
-            gap: "1.32em",
+            gap: "1.33em",
             maxWidth: 470,
             width: "96%",
             zIndex: 5
@@ -228,31 +230,31 @@ export default function HeroSection({ onAdopt }) {
             <motion.div
               key={f.label}
               className="hero-feature"
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{
-                delay: 0.37 + 0.14 * i,
+                delay: 0.33 + 0.16 * i,
                 duration: 0.48,
                 type: "spring",
-                stiffness: 195
+                stiffness: 190
               }}
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                padding: "0.65em 1.25em 0.85em 1.25em",
-                background: "rgba(255,251,247,0.82)",
+                padding: "0.6em 1.15em 0.8em 1.15em",
+                background: "rgba(255,251,247,0.83)",
                 borderRadius: "1.5em",
-                minWidth: 95,
-                boxShadow: "0 4px 17px var(--mint), 0 1.5px 7px var(--blush-pink)",
+                minWidth: 92,
+                boxShadow: "0 4px 17px var(--mint), 0 2.5px 7px var(--blush-pink)",
                 fontWeight: 700
               }}
             >
               <span
                 style={{
                   fontSize: "2.1em",
-                  marginBottom: 2,
-                  filter: "drop-shadow(0 2px 11px var(--favorite))"
+                  marginBottom: 4,
+                  filter: "drop-shadow(0 2px 13px var(--favorite))"
                 }}
                 aria-hidden="true"
               >
@@ -260,8 +262,8 @@ export default function HeroSection({ onAdopt }) {
               </span>
               <span
                 style={{
-                  fontSize: "1.01em",
-                  marginTop: 2,
+                  fontSize: "1.07em",
+                  marginTop: 1,
                   color: "var(--deep-cocoa)",
                   fontFamily: "'Quicksand','Poppins',sans-serif",
                   textShadow: "0 2px 8px var(--soft-sage)",
@@ -275,7 +277,7 @@ export default function HeroSection({ onAdopt }) {
           ))}
         </div>
       </motion.div>
-      {/* Nice fade bottom gradient for page transition */}
+      {/* Nice fade bottom gradient for page transition/edge */}
       <div
         aria-hidden="true"
         style={{
@@ -283,8 +285,8 @@ export default function HeroSection({ onAdopt }) {
           bottom: 0,
           left: 0,
           width: "100vw",
-          height: "8vh",
-          background: "linear-gradient(0deg, var(--app-bg) 78%, rgba(255,255,255,0.29) 100%, transparent 0%)",
+          height: "9vh",
+          background: "linear-gradient(0deg, var(--app-bg) 92%, rgba(255,255,255,0.20) 100%, transparent 0%)",
           zIndex: 8
         }}
       />
