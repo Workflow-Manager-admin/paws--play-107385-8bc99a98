@@ -10,6 +10,13 @@ import CertModal from "./ui/CertModal";
 import TipsSection from "./ui/TipsSection";
 import { fetchPetImages } from "./pexelsApi";
 import { AnimatePresence, motion } from "framer-motion";
+// --- Lively SFX ---
+const SWIPE_RIGHT_SFX = "https://cdn.pixabay.com/audio/2022/03/15/audio_118bfa1d93.mp3";
+const SWIPE_LEFT_SFX = "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4fe0.mp3";
+const BADGE_SFX = "https://cdn.pixabay.com/audio/2022/10/16/audio_13f2fc0dfa.mp3";
+const ADOPT_SFX = "https://cdn.pixabay.com/audio/2023/08/04/audio_147fca777c.mp3";
+const PAWPRINT_IMG = "data:image/svg+xml;utf8,<svg viewBox='0 0 32 32' fill='pink' xmlns='http://www.w3.org/2000/svg'><circle cx='16' cy='24' r='8'/><circle cx='7' cy='16' r='4'/><circle cx='25' cy='16' r='4'/><circle cx='12' cy='8' r='3'/><circle cx='20' cy='8' r='3'/></svg>";
+
 
 /**
  * Vibrant, playful, and believable mock pet data
@@ -116,6 +123,20 @@ function App() {
   // For animating card stack directions
   const [swipeDir, setSwipeDir] = useState(null);
 
+  // Undo stack and effect pawprint
+  const [undoStack, setUndoStack] = useState([]);
+  const [undoMsg, setUndoMsg] = useState("");
+  const [showUndo, setShowUndo] = useState(false);
+  const [pawprint, setPawprint] = useState({ x: null, y: null, show: false });
+
+  // Play sound
+  const playSound = (url, volume = 0.40) => {
+    if (!url) return;
+    const audio = new window.Audio(url);
+    audio.volume = volume;
+    audio.play().catch(()=>{});
+  };
+
   // Load pets on mount
   useEffect(() => {
     setLoading(true);
@@ -152,51 +173,99 @@ function App() {
     localStorage.setItem("badges", JSON.stringify(badges));
   }, [badges]);
 
+  // Animate pawprint when favoriting/adopting
+  const showPawprint = (e) => {
+    let x = (e && e.clientX) || (window.innerWidth / 2), y = (e && e.clientY) || 300;
+    setPawprint({ x, y, show: true });
+    setTimeout(() => setPawprint({ x: null, y: null, show: false }), 620);
+  };
+
   // Handle swipes: left (skip), right (favorite)
-  const handleSwipe = dir => {
+  const handleSwipe = (dir, evt = null) => {
+    if (!petCards.length) return;
     setSwipeDir(dir);
     setTimeout(() => setSwipeDir(null), 340);
-    if (!petCards.length) return;
+
+    // Track undoable action
+    const topCard = petCards[0];
+    let localUndo = { pet: topCard, type: dir === "right" ? "fav" : "skip" };
+    setUndoStack(stack => stack.length > 8 ? [localUndo] : [localUndo,...stack]);
+    setShowUndo(true);
+    setUndoMsg((dir === "right" ? "Favorited!" : "Skipped") + ` ${topCard?.name}`);
+
+    // Sound & feedback
     if (dir === "right") {
-      // favorite
+      playSound(SWIPE_RIGHT_SFX, 0.25 + Math.random()*0.18);
+      showPawprint(evt);
+    } else {
+      playSound(SWIPE_LEFT_SFX, 0.23);
+    }
+
+    // Gamification for favoriting
+    if (dir === "right") {
       setFavorites(list => {
-        if (!list.some(f => f.img === petCards[0].img)) {
+        if (!list.some(f => f.img === topCard.img)) {
           // Earn badge
           if (!badges.find(b => b.key === "first_favorite" && b.earned)) {
-            setBadges(bs => updateBadgeStatus(bs, "first_favorite"));
+            setBadges(bs => { playSound(BADGE_SFX,0.20); return updateBadgeStatus(bs, "first_favorite"); });
           }
           if (list.length + 1 >= 7 && !badges.find(b => b.key === "swipe_star" && b.earned)) {
-            setBadges(bs => updateBadgeStatus(bs, "swipe_star"));
+            setBadges(bs => { playSound(BADGE_SFX,0.20); return updateBadgeStatus(bs, "swipe_star"); });
           }
           return [
             ...list,
-            { name: petCards[0].name, img: petCards[0].img }
+            { name: topCard.name, img: topCard.img }
           ];
         }
         return list;
       });
     }
-    // Remove top card
-    setPetCards(cards => cards.slice(1));
+    // Remove top card from deck
+    setTimeout(() => {
+      setPetCards(cards => cards.slice(1));
+    }, 66);
   };
 
-  // Adopt pet modal
-  const handleAdopt = () => {
+  // UNDO feature for favorites/skipped
+  const handleUndo = () => {
+    if (!undoStack.length) return;
+    const last = undoStack[0];
+    // Undo favorite: remove from favorites if exists and re-add to petCards
+    if (last.type === "fav") {
+      setFavorites(favs => favs.filter(f => f.img !== last.pet.img));
+      setPetCards(cards => [last.pet, ...cards]);
+      setUndoMsg("Undo: removed from favorites");
+      playSound(SWIPE_LEFT_SFX,0.23);
+    } else {
+      // Undo skip: readd to petCards
+      setPetCards(cards => [last.pet, ...cards]);
+      setUndoMsg("Undo: returned card");
+    }
+    setUndoStack(stack => stack.slice(1));
+    setShowUndo(false);
+  };
+
+  // Adopt pet modal with feedback and badge
+  const handleAdopt = (evt) => {
+    const currentPet = petCards[0];
     // Earn adoption badge
     if (!badges.find(b => b.key === "adopted" && b.earned)) {
-      setBadges(bs => updateBadgeStatus(bs, "adopted"));
+      playSound(ADOPT_SFX, 0.34);
+      setBadges(bs => { playSound(BADGE_SFX,0.24); return updateBadgeStatus(bs, "adopted"); });
     }
-    setAdoptedPet(petCards[0]);
+    setAdoptedPet(currentPet);
     setCertModal(true);
+    showPawprint(evt);
+    // Remove pet from deck after short delay (if present)
+    setTimeout(() => setPetCards(cards => cards.slice(1)), 220);
   };
 
-  // Virtual home trial
+  // Virtual home trial gamifies with badge
   const handleTrialClick = () => setShowTrial(true);
   const handleTrialSticker = s => setTrialSticker(s);
   const handleTrialSubmit = () => {
-    // Earn badge for trial
     if (!badges.find(b => b.key === "trial" && b.earned)) {
-      setBadges(bs => updateBadgeStatus(bs, "trial"));
+      setBadges(bs => { playSound(BADGE_SFX,0.18); return updateBadgeStatus(bs, "trial"); });
     }
     setShowTrial(false);
     setTrialImg(null);
@@ -205,6 +274,27 @@ function App() {
 
   // Responsive: card area ref for scroll
   const swipeSectionRef = useRef();
+
+  // Animated pawprint feedback node
+  const PawprintFX = () => (
+    pawprint.show ?
+      <img
+        src={PAWPRINT_IMG}
+        alt=""
+        style={{
+          position: "fixed",
+          left: pawprint.x - 23,
+          top: pawprint.y - 25,
+          width: 46,
+          height: 46,
+          pointerEvents: "none",
+          transition: "all 0.23s cubic-bezier(.5,.62,.32,.7)",
+          animation: "bounce 0.55s, pawpop 0.6s",
+          zIndex: 90,
+          filter: "drop-shadow(0 0 16px var(--primary))"
+        }}
+      /> : null
+  );
 
   // Animations & modal transitions
   return (
@@ -243,8 +333,56 @@ function App() {
             }}>
               <HeroSection onAdopt={() => swipeSectionRef?.current?.scrollIntoView({behavior: 'smooth', block: 'center'})} />
 
+              {/* Undo/feedback animated bar */}
+              <div style={{
+                minHeight: 44,
+                marginBottom: 4,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%"
+              }}>
+                <AnimatePresence>
+                {showUndo && undoMsg ? (
+                  <motion.div
+                    initial={{ opacity: 0, y:-20 }}
+                    animate={{ opacity: 1, y:0 }}
+                    exit={{ opacity: 0, scale: 0.77 }}
+                    style={{
+                      background: "var(--mint)",
+                      borderRadius: "1.2em",
+                      color: "var(--primary)",
+                      fontWeight: 700,
+                      fontSize: "1em",
+                      boxShadow: "0 4px 22px var(--primary)",
+                      margin: "7px 0.8em",
+                      padding: "0.38em 1.22em 0.38em 1.05em",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "1em",
+                      zIndex: 9
+                    }}>
+                    <span style={{ fontSize: "1.23em", marginRight: 6 }}>🐾</span>
+                    {undoMsg}
+                    <motion.button
+                      className="hero-btn"
+                      style={{
+                        background: "var(--primary)",
+                        color:"var(--text-bright)",
+                        fontSize: "0.95em",
+                        marginLeft:12,
+                        padding:"0.25em 1.08em"
+                      }}
+                      whileTap={{scale:0.97}}
+                      onClick={handleUndo}
+                    >Undo</motion.button>
+                  </motion.div>
+                ) : null}
+                </AnimatePresence>
+              </div>
               {/* Swipeable Cards */}
-              <section className="swipe-section" id="swipe" ref={swipeSectionRef} style={{display: "flex", flexDirection: "column", alignItems: "center", minHeight: 450}}>
+              <section className="swipe-section" id="swipe" ref={swipeSectionRef} style={{display: "flex", flexDirection: "column", alignItems: "center", minHeight: 450, position:"relative"}}>
+                <PawprintFX />
                 {loading ? (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -292,7 +430,7 @@ function App() {
                         >
                           <SwipeCard
                             pet={pet}
-                            onFav={() => handleSwipe("right")}
+                            onFav={e => handleSwipe("right",e)}
                             onAdopt={handleAdopt}
                           />
                           {/* Swipe left/right buttons mobile */}
@@ -306,14 +444,14 @@ function App() {
                               title="Skip"
                               whileTap={{ scale: 1.19 }}
                               style={{ background: "var(--secondary)", color: "var(--primary)", marginRight: 30 }}
-                              onClick={() => handleSwipe("left")}
+                              onClick={e => handleSwipe("left",e)}
                             >⏪</motion.button>
                             <motion.button
                               className="heart-btn"
                               title="Fav"
                               whileTap={{ scale: 1.19 }}
                               style={{ background: "var(--mint)", color: "var(--petal)" }}
-                              onClick={() => handleSwipe("right")}
+                              onClick={e => handleSwipe("right",e)}
                             >💖</motion.button>
                             <motion.button
                               className="hero-btn"
