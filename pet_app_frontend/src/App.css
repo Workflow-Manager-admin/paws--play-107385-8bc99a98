@@ -1,31 +1,41 @@
 :root {
-  --primary: #FFB6B6;
-  --secondary: #B6E1FF;
-  --accent: #FFD9B6;
-  --mint: #B6FFDE;
-  --warmBeigeBg: #FFF6ED;
-  --text-primary: #3f2925;
-  --text-secondary: #797089;
-  --card-bg: #fffaf6;
-  --shadow-lg: 0px 8px 24px rgba(255,183,182,0.13), 0 4px 24px rgba(71,198,255,0.08), 0 1.5px 4px rgba(188,221,229,0.13);
-  --shadow-softer: 0px 4px 22px rgba(200,220,255,0.11), 0 1px 3px rgba(220,188,255,0.07);
-  --border-radius-xl: 1.5em;
-  --border-radius-2xl: 2.5em;
+  --primary: #FF8AC2;           /* bright orchid pink pastel */
+  --secondary: #71D9F7;         /* vivid pastel cyan */
+  --accent: #FFD36E;            /* glowing light pastel yellow */
+  --mint: #78FFD6;              /* luminous mint */
+  --lavender: #CAB8FF;          /* extra accent pastel */
+  --pop-sky: #85A8FF;           /* energetic blue */
+  --petal: #FFA8BF;             /* lively pink */
+  --warmBeigeBg: #FFF9F0;       /* lightest soft background */
+  --text-primary: #25214D;      /* deep navy for contrast */
+  --text-secondary: #A59DCC;    /* pastel purple-gray */
+  --text-bright: #FFFFFF;
+  --card-bg: #FFF7FD;
+  --shadow-lg: 0 8px 28px 0 rgba(255, 138, 194, 0.19), 0 5px 32px 0 rgba(136, 211, 247, 0.13), 0 2.5px 8px 0 rgba(200, 184, 255, 0.18);
+  --shadow-softer: 0 4px 18px rgba(255, 211, 110, 0.15), 0 1.5px 8px rgba(113, 217, 247, 0.09);
+  --shadow-bright: 0 3em 14em #FFD36E33, 0 3px 10px #FF8AC24D;
+  --border-radius-xl: 1.6em;
+  --border-radius-2xl: 2.6em;
   --app-bg: var(--warmBeigeBg);
 }
 
 [data-theme="dark"] {
-  --primary: #B6E1FF;
-  --secondary: #FFB6B6;
-  --accent: #FFD9B6;
-  --mint: #7fdacb;
-  --warmBeigeBg: #191a20;
-  --card-bg: #282c35;
-  --text-primary: #FAF6F3;
-  --text-secondary: #cccadd;
-  --shadow-lg: 0 8px 24px rgba(90,130,200,0.17), 0 4px 14px rgba(110,130,188,0.14);
-  --shadow-softer: 0px 4px 22px rgba(120,120,180,0.17), 0 1px 3px rgba(70,88,117,0.07);
-  --app-bg: #191a20;
+  --primary: #4ED5FF;           /* neon blue pastel */
+  --secondary: #FF8AC2;         /* pink pastel preserved for accents */
+  --accent: #FFE18A;            /* luminous pastel yellow */
+  --mint: #00FFC6;              /* intense mint */
+  --lavender: #9B80FF;
+  --pop-sky: #2A56FF;
+  --petal: #FF70B5;
+  --warmBeigeBg: #191B2A;
+  --card-bg: #21223A;
+  --text-primary: #F7EFFD;
+  --text-secondary: #8890AD;
+  --text-bright: #FFFDEB;
+  --shadow-lg: 0 8px 32px rgba(87, 203, 252, 0.19), 0 4px 24px rgba(255, 138, 194, 0.14), 0 1.5px 6px rgba(91, 86, 166, 0.14);
+  --shadow-softer: 0 4px 18px rgba(0, 255, 198, 0.14), 0 1.5px 8px rgba(255, 112, 181, 0.10);
+  --shadow-bright: 0 2em 11em #4ED5FF22, 0 2px 8px #FF8AC244;
+  --app-bg: #191B2A;
 }
 
 html, body, #root, .App {

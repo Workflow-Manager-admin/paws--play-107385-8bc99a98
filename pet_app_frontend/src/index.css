@@ -48,10 +48,11 @@ code {
 }
 
 /* Rounded corners and soft shadows as utility classes */
-.rounded-xl { border-radius: 1.25em; }
-.rounded-2xl { border-radius: 2.25em; }
-.soft-shadow { box-shadow: 0 4px 24px rgba(100,90,80,0.13), 0 1.5px 4px rgba(220,170,110,0.07);}
-.sticker-shadow { box-shadow: 0 12px 32px rgba(255,195,170,0.15), 0 4px 12px rgba(150,180,240,0.11); }
+.rounded-xl { border-radius: 1.35em; }
+.rounded-2xl { border-radius: 2.35em; }
+.soft-shadow { box-shadow: 0 6px 28px rgba(255,138,194,0.14), 0 2.5px 8px rgba(113,217,247,0.14);}
+.sticker-shadow { box-shadow: 0 16px 42px rgba(255,211,110,0.15), 0 6px 18px rgba(78,213,255,0.13);}
+.shadow-bright { box-shadow: 0 2em 9em #FFD36E33, 0 1px 5px #4ED5FF22; }
 
 /* Focus ring for accessibility */
 :focus-visible {

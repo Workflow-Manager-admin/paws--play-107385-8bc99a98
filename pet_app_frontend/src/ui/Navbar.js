@@ -12,7 +12,8 @@ export default function Navbar({ onCta }) {
           fontWeight: 800,
           fontSize: "1.44em",
           letterSpacing: "1px",
-          color: "var(--primary)"
+          color: "var(--pop-sky)",
+          textShadow: "0 1px 12px var(--accent)"
         }}>
           Adopt-A-Pet
         </span>

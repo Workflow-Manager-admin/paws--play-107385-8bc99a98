@@ -15,9 +15,10 @@ export default function BadgeSection({ badges = [] }) {
       {badges.map((badge, i) =>
         badge.earned ?
         (<span className="badge-earned" key={i} style={{
-          width: 40, height: 40, borderRadius: "50%", background: "var(--primary)", 
-          display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6em",
-          boxShadow: "0 2px 8px rgba(255,182,182,0.17)", color: "#fff" }}
+          width: 44, height: 44, borderRadius: "50%", background: "var(--accent)", 
+          display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.9em",
+          boxShadow: "0 2px 14px var(--primary), 0 0.5px 3px var(--secondary)", color: "var(--pop-sky)"
+        }}
         >
           🏆
         </span>)

@@ -15,7 +15,14 @@ export default function FavoriteGrid({ favorites = [] }) {
       {favorites.map((pet, i) => (
         <div className="fav-card" key={i}>
           <img src={pet.img} className="fav-pet-img" alt={pet.name} />
-          <span className="fav-pet-name">{pet.name}</span>
+          <span
+            className="fav-pet-name"
+            style={{
+              color: "var(--pop-sky)",
+              fontWeight: 700,
+              textShadow: "0 0.5px 7px var(--accent), 0 0 3px white"
+            }}
+          >{pet.name}</span>
         </div>
       ))}
     </div>

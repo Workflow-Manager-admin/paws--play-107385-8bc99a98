@@ -34,7 +34,15 @@ export default function HeroSection({ onAdopt }) {
         Collect favorites, earn badges & adopt with joy!<br />
         Every photo powered by Pexels.
       </div>
-      <button className="hero-btn bouncy" onClick={onAdopt}>Start Swiping!</button>
+      <button
+        className="hero-btn bouncy"
+        style={{
+          background: "linear-gradient(93deg, var(--primary), var(--secondary) 90%, var(--mint))",
+          color: "var(--text-bright)",
+          boxShadow: "0 5px 38px var(--primary), 0 1.5px 18px var(--mint)"
+        }}
+        onClick={onAdopt}
+      >Start Swiping!</button>
     </section>
   );
 }
