@@ -13,6 +13,7 @@ const PET_SFX = "https://cdn.pixabay.com/audio/2022/03/15/audio_118bfa1d93.mp3";
 const DROP_SFX = "https://cdn.pixabay.com/audio/2022/11/16/audio_128947aeb4.mp3";
 const DECORATE_SFX = "https://cdn.pixabay.com/audio/2022/10/16/audio_13f2fc0dfa.mp3";
 
+// Stickers palette for extra fun
 const STICKER_LIST = [
   { icon: "🦴", anim: true },
   { icon: "🧸", anim: false },
