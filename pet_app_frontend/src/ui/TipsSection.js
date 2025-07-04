@@ -71,11 +71,11 @@ export default function TipsSection() {
   const makeIcon = (tip, i) => (
     <motion.span
       key={`icon-${i}`}
-      aria-label="icon"
       role="img"
+      aria-label="tip icon"
       style={{
         fontSize: "2.1em",
-        background: "white",
+        background: "#FFFFFF",
         borderRadius: "1.2em",
         padding: "0.1em 0.25em",
         boxShadow: "0 3px 18px var(--pop-sky), 0 1px 6px var(--accent)",
@@ -84,7 +84,9 @@ export default function TipsSection() {
         textAlign: "center",
         display: "inline-block",
         verticalAlign: "middle",
-        filter: "drop-shadow(0 2px 11px var(--mint))"
+        filter: "drop-shadow(0 2px 11px var(--mint))",
+        outline: "2.7px solid var(--accent)",
+        outlineOffset: "-1.1px"
       }}
       initial={{ scale: 0.85, rotate: 0, y: 0 }}
       animate={tip.animate}
@@ -102,7 +104,7 @@ export default function TipsSection() {
     <section
       className="tips-section"
       id="tips"
-      aria-label="Pet Tips"
+      aria-label="Pet Tips Carousel"
       ref={scrollRef}
       style={{
         width: "100vw",
@@ -118,11 +120,15 @@ export default function TipsSection() {
         scrollSnapType: "x mandatory"
       }}
       tabIndex={0}
+      role="region"
+      aria-roledescription="horizontal tips list"
     >
       {TIP_DATA.map((tip, i) => (
         <motion.div
           key={i}
           className="tip-card"
+          aria-label={`Tip: ${tip.text}`}
+          role="group"
           style={{
             background: tip.color,
             color: "var(--text-primary)",
@@ -139,10 +145,13 @@ export default function TipsSection() {
             fontSize: "1.06em",
             transition: "background 0.3s",
             outline: "none",
-            cursor: "grab" // hints you can swipe/scroll
+            cursor: "grab", // hints you can swipe/scroll
+            border: "2.5px solid var(--pop-sky)",
+            outlineOffset: "-1.2px",
           }}
           tabIndex={0}
-          whileHover={{ scale: 1.04, boxShadow: "0 4px 40px var(--mint)" }}
+          whileHover={{ scale: 1.05, boxShadow: "0 6px 44px var(--mint)" }}
+          whileFocus={{ borderColor: "var(--secondary)", outline: "3px solid var(--secondary)" }}
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1+0.08*i, duration: 0.54 }}
