@@ -68,6 +68,158 @@ html, body, #root, .App {
   to { opacity: 1; transform: none;}
 }
 
+/* === USABILITY ENHANCEMENTS === */
+/* Larger tap targets on buttons, especially on mobile */
+button, .heart-btn, .hero-btn, .nav-btn {
+  min-width: 48px;
+  min-height: 48px;
+  touch-action: manipulation;
+}
+
+/* More prominent focus-visible for accessibility */
+:focus-visible, button:focus-visible, .nav-link:focus-visible, .nav-btn:focus-visible, .hero-btn:focus-visible {
+  outline: 0.22em solid var(--secondary);
+  outline-offset: 3px !important;
+  background: var(--accent);
+  box-shadow: 0 0 0 7px var(--petal);
+  z-index: 222 !important;
+}
+
+/* Add subtle tap/click ripples on buttons */
+button:active, .hero-btn:active, .heart-btn:active {
+  box-shadow: 0 0 0 18px var(--accent), 0 2px 8px var(--secondary);
+  filter: brightness(0.96);
+  transition: box-shadow 0.15s, filter 0.1s;
+}
+
+/* Improved card tap area */
+.swipe-card,
+.tip-card,
+.fav-card {
+  cursor: pointer;
+  transition: box-shadow 0.17s, transform 0.11s;
+}
+.swipe-card:active,
+.tip-card:active,
+.fav-card:active {
+  transform: scale(0.97);
+  box-shadow: 0 10px 44px var(--petal), 0 6px 18px var(--pop-sky);
+}
+
+/* Give extra thumb zone padding at the bottom on mobile for floating CTAs */
+@media (max-width: 600px) {
+  body, .App {
+    padding-bottom: 80px !important;
+  }
+  main { padding-bottom: 86px !important; }
+}
+
+/* Widen navbar, space links for desktop */
+@media (min-width: 950px) {
+  .navbar {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-left: 2vw;
+    padding-right: 2vw;
+  }
+  .nav-links {
+    gap: 2.1em;
+  }
+  main {
+    max-width: 900px;
+  }
+}
+/* Prime thumb zone (bottom/center) for floating main CTAs */
+@media (max-width: 600px) {
+  .hero-btn.bouncy, .hero-btn.floating-main {
+    position: fixed !important;
+    left: 6vw !important;
+    right: 6vw !important;
+    bottom: 18px !important;
+    width: 88vw !important;
+    max-width: 375px !important;
+    border-radius: 2.1em !important;
+    box-shadow: 0 8px 40px var(--primary), 0 2.5px 32px var(--mint);
+    z-index: 500 !important;
+  }
+}
+
+/* Edge-to-edge swipe section for max thumb accessibility */
+@media (max-width: 570px) {
+  .swipe-section {
+    max-width: 100vw;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .swipe-card {
+    width: 98vw !important;
+    min-width: 93vw !important;
+  }
+}
+
+/* More generous spacing on desktop for looser, less cramped look */
+@media (min-width: 1100px) {
+  main {
+    max-width: 1020px;
+    margin-top: 25px;
+    gap: 2.5em;
+  }
+  .hero, .badge-section, .tips-section, .favorites-grid {
+    max-width: 780px !important;
+    margin: 2.4em auto !important;
+  }
+  .swipe-section {
+    max-width: 500px !important;
+  }
+}
+
+/* === MICROINTERACTION ANIMATIONS === */
+/* Card hover pop and shimmer for desktop */
+@media (hover: hover) and (pointer: fine) {
+  .swipe-card:hover {
+    box-shadow: 0 0 0 9px var(--accent), 0 10px 44px var(--primary), 0 8px 32px var(--mint);
+    background: linear-gradient(132deg, var(--primary) 55%, var(--pop-sky) 100%);
+    outline: 2.5px solid var(--secondary);
+    filter: brightness(1.06) saturate(1.13);
+    z-index: 14;
+    transition: box-shadow 0.21s, background 0.21s, outline 0.15s, filter 0.13s;
+  }
+  .tip-card:hover {
+    box-shadow: 0 0 0 8px var(--mint), 0 10px 28px var(--accent);
+    filter: brightness(1.1) saturate(1.1);
+    outline: 2.5px solid var(--secondary);
+  }
+  .fav-card:hover {
+    box-shadow: 0 6px 27px var(--pop-sky);
+    border: 2.5px solid var(--primary);
+    filter: brightness(1.11);
+  }
+}
+/* "Button press" effect accent for tap/click */
+@media (hover: none) and (pointer: coarse) {
+  button:active, .hero-btn:active, .nav-btn:active {
+    box-shadow: 0 0 0 28px var(--mint), 0 4px 16px var(--secondary);
+    filter: brightness(0.99);
+  }
+}
+
+/* Smoother, more responsive carousel with snap for tips */
+.tips-section {
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+}
+.tip-card {
+  scroll-snap-align: center;
+}
+
+/* Extra Accessible: make all .tip-card focusable for keyboard users,
+   with larger outlines and implicit navigation */
+.tip-card:focus-visible {
+  outline: 4px solid var(--secondary) !important;
+  box-shadow: 0 0 0 7px var(--petal) !important;
+  z-index: 200 !important;
+}
+
 /* Links and navigation */
 a {
   color: var(--primary);
@@ -449,4 +601,11 @@ header.navbar {
   30% {transform: scale(1.16);}
   70% {transform: scale(0.89);}
   100% {transform: scale(1);}
+}
+
+/* Focus and elevated visual hierarchy for cards/buttons */
+.swipe-card:focus-visible, .fav-card:focus-visible, .tip-card:focus-visible, .hero-btn:focus-visible {
+  outline: 3.5px solid var(--mint) !important;
+  box-shadow: 0 0 0 8px var(--mint), 0 10px 44px var(--primary) !important;
+  z-index: 99 !important;
 }

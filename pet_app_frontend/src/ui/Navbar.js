@@ -20,7 +20,19 @@ export default function Navbar({ onCta }) {
         </span>
       </div>
       <nav className="nav-links" aria-label="Site sections">
-        <a className="nav-link active" href="#home" aria-current="page" tabIndex={0}>Home</a>
+        <a
+          className="nav-link active"
+          href="#home"
+          aria-current="page"
+          tabIndex={0}
+          style={{
+            borderBottom: "3px solid var(--mint)",
+            fontWeight: 700,
+            filter: "drop-shadow(0 1.5px 7px var(--accent))",
+          }}
+        >
+          Home
+        </a>
         <a className="nav-link" href="#swipe" tabIndex={0}>Swipe</a>
         <a className="nav-link" href="#favorites" tabIndex={0}>Favorites</a>
         <a className="nav-link" href="#tips" tabIndex={0}>Tips</a>

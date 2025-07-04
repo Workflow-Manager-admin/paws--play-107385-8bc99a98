@@ -339,53 +339,60 @@ function App() {
               <HeroSection onAdopt={() => swipeSectionRef?.current?.scrollIntoView({behavior: 'smooth', block: 'center'})} />
 
               {/* Undo/feedback animated bar */}
-              <div style={{
-                minHeight: 44,
-                marginBottom: 4,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "100%"
-              }}>
+              <div
+                style={{
+                  minHeight: 44,
+                  marginBottom: 4,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  width: "100%"
+                }}
+              >
                 <AnimatePresence>
-                {showUndo && undoMsg ? (
-                  <motion.div
-                    initial={{ opacity: 0, y:-20 }}
-                    animate={{ opacity: 1, y:0 }}
-                    exit={{ opacity: 0, scale: 0.77 }}
-                    style={{
-                      background: "var(--mint)",
-                      borderRadius: "1.2em",
-                      color: "var(--primary)",
-                      fontWeight: 700,
-                      fontSize: "1em",
-                      boxShadow: "0 4px 22px var(--primary)",
-                      margin: "7px 0.8em",
-                      padding: "0.38em 1.22em 0.38em 1.05em",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "1em",
-                      zIndex: 9
-                    }}>
-                    <span style={{ fontSize: "1.23em", marginRight: 6 }}>🐾</span>
-                    {undoMsg}
-                    <motion.button
-                      className="hero-btn"
+                  {showUndo && undoMsg ? (
+                    <motion.div
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.77 }}
                       style={{
-                        background: "var(--primary)",
-                        color:"var(--text-bright)",
-                        fontSize: "0.95em",
-                        marginLeft:12,
-                        padding:"0.25em 1.08em"
+                        background: "var(--mint)",
+                        borderRadius: "1.2em",
+                        color: "var(--primary)",
+                        fontWeight: 700,
+                        fontSize: "1em",
+                        boxShadow: "0 4px 22px var(--primary)",
+                        margin: "7px 0.8em",
+                        padding: "0.38em 1.22em 0.38em 1.05em",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "1em",
+                        zIndex: 9
                       }}
-                      whileTap={{scale:0.97}}
-                      onClick={handleUndo}
-                    >Undo</motion.button>
-                  </motion.div>
-                ) : null}
+                      tabIndex={0}
+                    >
+                      <span style={{ fontSize: "1.23em", marginRight: 6 }}>🐾</span>
+                      {undoMsg}
+                      <motion.button
+                        className="hero-btn"
+                        style={{
+                          background: "var(--primary)",
+                          color: "var(--text-bright)",
+                          fontSize: "0.95em",
+                          marginLeft: 12,
+                          padding: "0.25em 1.08em"
+                        }}
+                        whileTap={{ scale: 0.97 }}
+                        onClick={handleUndo}
+                        tabIndex={0}
+                      >
+                        Undo
+                      </motion.button>
+                    </motion.div>
+                  ) : null}
                 </AnimatePresence>
               </div>
-              {/* Swipeable Cards */}
+              {/* Swipeable Cards: THUMB ZONE and Responsive Placement */}
               <section className="swipe-section" id="swipe" ref={swipeSectionRef} style={{display: "flex", flexDirection: "column", alignItems: "center", minHeight: 450, position:"relative"}}>
                 <PawprintFX />
                 {loading ? (
@@ -495,15 +502,22 @@ function App() {
               />
 
               <>
+                {/* Floating main CTA always thumb-accessible on mobile */}
                 <motion.button
-                  className="hero-btn bouncy"
+                  className="hero-btn bouncy floating-main"
                   onClick={handleTrialClick}
                   style={{
-                    position: "fixed", left: 12, bottom: 25, zIndex: 99,
-                    border: "1.5px solid var(--mint)", background:"linear-gradient(96deg,var(--mint),var(--lavender))",
-                    color:"var(--text-primary)", fontWeight:600, fontSize:"1.1em", boxShadow: "0 4px 30px var(--mint)"
+                    border: "1.5px solid var(--mint)",
+                    background: "linear-gradient(96deg,var(--mint),var(--lavender))",
+                    color: "var(--text-primary)",
+                    fontWeight: 600,
+                    fontSize: "1.1em",
+                    boxShadow: "0 4px 30px var(--mint)",
+                    zIndex: 499,
                   }}
                   whileHover={{ scale: 1.08 }}
+                  tabIndex={0}
+                  aria-label="Try the virtual home trial"
                 >
                   🏡 Virtual Home Trial
                 </motion.button>
