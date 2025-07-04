@@ -1,5 +1,5 @@
-/* Font imports */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Quicksand:wght@600&family=Lato:wght@400;700&family=Poppins:wght@400;700&display=swap');
+/* Font imports: Headings (Baloo 2, Fredoka One), Body (Poppins, Lato) */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Fredoka+One&family=Quicksand:wght@600&family=Lato:wght@400;700&family=Poppins:wght@400;700&display=swap');
 
 /* Pawprint SVG as custom cursor (inline data-uri, light theme) */
 html {
