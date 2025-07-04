@@ -282,22 +282,93 @@ header.navbar {
   width: 39px; height: 39px;
   border: none; display: flex; align-items: center; justify-content: center;
 }
+/* --- Tips Section Duolingo-style lively carousel --- */
 .tips-section {
-  width: 94vw; max-width: 650px;
-  margin: 2.1em auto 2.3em auto;
-  display: flex; flex-wrap: wrap; gap: 0.85em;
+  width: 100vw;
+  max-width: 730px;
+  margin: 2.3em auto 2.7em auto;
+  overflow-x: auto;
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.87em;
+  scrollbar-width: thin;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  transition: background 0.24s;
+  min-height: 96px;
+  will-change: transform;
+  /* hide desktop scrollbar on Chrome */
+}
+.tips-section::-webkit-scrollbar {
+  height: 7px;
+  background: var(--accent, #FFD36E22);
+}
+.tips-section::-webkit-scrollbar-thumb {
+  background: var(--primary, #FF8AC2);
+  border-radius: 8px;
 }
 .tip-card {
-  background: var(--accent);
+  border-radius: 1.3em;
+  min-width: 210px;
+  max-width: 285px;
+  margin: 0 2px;
+  padding: 0.9em 1.13em 0.9em 0.5em;
+  font-size: 1.06em;
+  background: linear-gradient(90deg, var(--accent), var(--mint) 84%);
   color: var(--text-primary);
-  border-radius: var(--border-radius-xl);
-  box-shadow: var(--shadow-softer);
-  padding: 0.8em 1.1em;
-  font-size: 1.02em;
-  font-family: 'Poppins',sans-serif;
-  min-width: 135px;
-  flex: 1 0 30%;
+  font-family: 'Poppins', 'Quicksand',sans-serif;
+  font-weight: 600;
+  outline: none;
+  box-shadow: 0 2px 17px var(--primary), 0 0.5px 3px var(--accent);
+  display: flex;
+  align-items: center;
+  flex: 0 0 78vw;
+  scroll-snap-align: center;
+  cursor: grab;
+  transition: background 0.24s, box-shadow 0.2s;
+  will-change: transform;
+  user-select: none;
 }
+.tip-card:focus-visible {
+  background: var(--petal);
+  box-shadow: 0 2px 24px var(--primary), 0 0.5px 7px var(--secondary);
+  outline: 2.5px solid var(--pop-sky);
+}
+
+/* Responsive grid fallback for large screens */
+@media (min-width: 770px) {
+  .tips-section {
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow-x: visible;
+    max-width: 670px;
+    justify-content: center;
+    scroll-snap-type: none;
+    margin-top: 2.8em;
+  }
+  .tip-card {
+    min-width: 180px;
+    max-width: 245px;
+    flex: 1 0 32%;
+    scroll-snap-align: unset;
+  }
+}
+
+/* Extra mobile optimization */
+@media (max-width: 485px) {
+  .tips-section {
+    max-width: 99vw;
+    gap: 0.61em;
+    margin-left: 2vw;
+  }
+  .tip-card {
+    min-width: 82vw;
+    padding-left: 0.8em;
+    font-size: 1.01em;
+  }
+}
+
 
 @media (max-width: 800px) {
   .hero { max-width: 97vw; }
